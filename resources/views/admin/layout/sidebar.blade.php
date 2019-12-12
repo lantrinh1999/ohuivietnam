@@ -47,7 +47,7 @@
                 <li class="{{ activeNav('orders','index') }}">
                     <a href="{{ route('admin.orders.index') }}"><i class="fa fa-list"></i>Danh sách</a>
                 </li>
-        
+
             </ul>
         </li>
         <!-- Sản phẩm -->
@@ -92,7 +92,7 @@
                 </ul>
             </li>
 
-           
+
             <!-- Danh sách Tài khoản -->
             <li class="treeview {{ activeNav('users') }}">
                 <a href="javascript:;">
@@ -144,7 +144,7 @@
                 </ul>
             </li>
 
-         
+
 
             <li class="{{ activeNav('comments') }}">
                 <a href="{{ route('admin.comments.index') }}">
@@ -163,11 +163,11 @@
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{ activeNav('options','index') }}">
+                    <li class="{{ activeNav('options','theme_option') }}">
                         <a href="{{ route('admin.options.index') }}"><i class="fa  fa-circle-o"></i>Thiết lập chung</a>
                     </li>
-                    <li class="{{ activeNav('options','add') }}">
-                        <a href="{{ route('admin.options.add') }}"><i class="fa  fa-circle-o"></i>Thiết lập menu</a>
+                    <li class="{{ activeNav('options','menu') }}">
+                        <a href="{{ route('admin.options.menu') }}"><i class="fa  fa-circle-o"></i>Thiết lập menu</a>
                     </li>
                 </ul>
             </li>

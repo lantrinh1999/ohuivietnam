@@ -74,10 +74,15 @@ Route::group(['namespace' => 'Client'], function () {
         return view('test_payment');
     })->name('test_payment');
 
-    Route::post('load_more_comment','ProductController@load_more_comment')->name('load_more_comment');
-    Route::post('send_comment','ProductController@send_comment')->name('send_comment');
-    Route::post('add_wishlist','HomeController@add_wishlist')->name('add_wishlist');
+    Route::post('load_more_comment', 'ProductController@load_more_comment')->name('load_more_comment');
+    Route::post('send_comment', 'ProductController@send_comment')->name('send_comment');
+    Route::post('add_wishlist', 'HomeController@add_wishlist')->name('add_wishlist');
     // Route::get('thanh-toan', 'CheckoutController@index')->name('checkout');
+
+    // trang lien he fake
+    Route::get('lien-he', 'PageController@contact')->name('contact');
+
+
 
 });
 
@@ -93,18 +98,18 @@ Route::group(['namespace' => 'Client', 'middleware' => ['checkIsLogin']], functi
 
     Route::get('tai-khoan/thong-tin', 'UserController@info_account')->name('info_account');
 
-    Route::get('tai-khoan/don-hang','UserController@orderUser')->name('orderUser');
-    
+    Route::get('tai-khoan/don-hang', 'UserController@orderUser')->name('orderUser');
+
     Route::post('save_edit_info_account', 'UserController@save_edit_info_account')->name('save_edit_info_account');
 
     Route::get('tai-khoan/nhap-ma-gioi-thieu', 'UserController@enter_refferal_code')->name('enter_refferal_code');
 
     Route::post('use_refferal_code', 'UserController@use_refferal_code')->name('use_refferal_code');
-    
-    Route::post('send_comment','ProductController@send_comment')->name('send_comment');
-    
-    Route::post('add_wishlist','HomeController@add_wishlist')->name('add_wishlist');
-    Route::get('san-pham-yeu-thich','HomeController@wishlist')->name('wishlist');
+
+    Route::post('send_comment', 'ProductController@send_comment')->name('send_comment');
+
+    Route::post('add_wishlist', 'HomeController@add_wishlist')->name('add_wishlist');
+    Route::get('san-pham-yeu-thich', 'HomeController@wishlist')->name('wishlist');
 });
 
 // ==================== cliend ==================== #
@@ -195,7 +200,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkIsAdmin'], 'namespace'
     Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
         Route::get('/', 'OrderController@index')->name('index');
         Route::get('edit/{id}', 'OrderController@edit')->name('edit');
-        Route::post('saveEdit/{id}','OrderController@saveEdit')->name('saveEdit');
+        Route::post('saveEdit/{id}', 'OrderController@saveEdit')->name('saveEdit');
         Route::post('delete', 'OrderController@delete')->name('delete');
         Route::post('deleteMulti', 'OrderController@deleteMulti')->name('deleteMulti');
     });
@@ -282,10 +287,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkIsAdmin'], 'namespace'
     /*
      * Options
      */
-    Route::group(['as' => 'options.'], function () {
+    Route::group(['prefix' => 'options', 'as' => 'options.'], function () {
         Route::get('theme_option', 'OptionController@index')->name('index');
-        Route::get('add', 'OptionController@create')->name('add');
+        Route::get('menu', 'OptionController@menu')->name('menu');
         Route::post('saveLogo', 'OptionController@saveLogo')->name('saveLogo');
         Route::post('saveSlide', 'OptionController@saveSlide')->name('saveSlide');
+        Route::post('savePoint', 'OptionController@savePoint')->name('savePoint');
+        Route::post('saveMenu', 'OptionController@saveMenu')->name('saveMenu');
+        Route::post('saveService', 'OptionController@saveService')->name('saveService');
     });
+
 });

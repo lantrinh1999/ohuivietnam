@@ -1,8 +1,7 @@
 <?php
+use App\Models\Attribute_value;
 use App\Models\Option;
 use App\Models\Product;
-use App\Models\Attribute_value;
-
 
 if (!function_exists('test')) {
     function test()
@@ -53,9 +52,15 @@ if (!function_exists('getToken')) {
 }
 
 if (!function_exists('get_option')) {
-    function get_option($key){
-        $option = Option::where('key',$key)->first();
-        return $option->value;
+    function get_option($key)
+    {
+        $option = Option::where('key', $key)->first();
+        if (!empty($option->value)) {
+            return $option->value;
+        } else {
+            return '';
+        }
+
     }
 }
 
@@ -63,23 +68,25 @@ if (!function_exists('ohui_number_format')) {
     function ohui_number_format($price)
     {
         $price2 = number_format($price, 0, '', ',') . 'đ';
-       return $price2;
+        return $price2;
     }
 }
 
-if(!function_exists('get_product_by_id')){
-    function get_product_by_id($id){
+if (!function_exists('get_product_by_id')) {
+    function get_product_by_id($id)
+    {
         $product = Product::where('id', $id)->with('galleries')->first();
         return $product;
     }
 }
 
-if(!function_exists('get_attribute_value_by_id')){
-    function get_attribute_value_by_id($id){
+if (!function_exists('get_attribute_value_by_id')) {
+    function get_attribute_value_by_id($id)
+    {
         if ($id == 0) {
             $value = null;
-        }else{
-            $value = Attribute_value::where('id',$id)->first();
+        } else {
+            $value = Attribute_value::where('id', $id)->first();
         }
 
         return $value;
@@ -92,9 +99,43 @@ if (!function_exists('getCookieCouPon')) {
         $value = Cookie::get('coupon');
         if (empty($value)) {
             $value = null;
-        }else{
-            $value = json_decode($value,true);
-        };
+        } else {
+            $value = json_decode($value, true);
+        }
+        ;
         return $value;
     }
+}
+
+if (!function_exists('_substr')) {
+    function _substr($str, $length = 60, $minword = 59)
+    {
+        $sub = '';
+        $len = 0;
+        foreach (explode(' ', $str) as $word) {
+            $part = (($sub != '') ? ' ' : '') . $word;
+            $sub .= $part;
+            $len += strlen($part);
+            if (strlen($word) > $minword && strlen($sub) >= $length) {
+                break;
+            }
+        }
+        return $sub . (($len < strlen($str)) ? '...' : '');
+    }
+
+}
+
+if (!function_exists('_genUrl')) {
+    function _genUrl($str)
+    {
+        switch ($str) {
+            case ':home:':
+                return url('/');
+                break;
+            default:
+                return filter_var($str, FILTER_VALIDATE_URL) ? $str : url("$str");
+                break;
+        }
+    }
+
 }

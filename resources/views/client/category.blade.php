@@ -8,6 +8,18 @@ Ohui Việt Nam
         width: 100% !important;
         height: 30px !important;
     }
+    .pagination .page-item  .page-link{
+        background: white;
+        color: #a749ff;
+
+    }
+    .pagination .active .page-link{
+        background: #a749ff;
+        color:white;
+        border-color: #ddd;
+        cursor: context-menu;
+    }
+
 
 </style>
 <form action="" method="get" id="filters"></form>
@@ -103,10 +115,10 @@ Ohui Việt Nam
                                                         href="{{route('product_detail',['slug' => $item->slug])}}"> Xem
                                                         chi tiết</a>
                                                 </div>
-                                                <div class="pro-same-action pro-quickview">
+                                                {{-- <div class="pro-same-action pro-quickview">
                                                     <a title="Quick View" href="#" data-toggle="modal"
                                                         data-target="#exampleModal"><i class="pe-7s-look"></i></a>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                         <div class="product-content text-center">

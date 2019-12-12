@@ -14,7 +14,15 @@ class CategoryController extends Controller
     public function index(Request $request, $cate)
     {
         $category = Category::where('slug', '=', $cate)->first();
+        if (empty($category->id)) {
+            abort(404);
+        }
         $cate_id = $category->id;
+        $categories_id = [];
+        $categories_id = Category::select('id')->where('parent_id', '=', $cate_id)->get()->toArray();
+        $categories_id = array_column($categories_id, 'id');
+        array_push($categories_id, $cate_id);
+        // dd($categories_id);
         $sort = $request->input('sort');
         $orderBy = [];
         switch ($sort) {
@@ -40,13 +48,13 @@ class CategoryController extends Controller
         $attr = $request->input('attr');
         $search = $request->input('search');
         $products = Product::where('status', '=', 1)
-            ->where(function ($query) use ($search, $attr, $cate_id) {
+            ->where(function ($query) use ($search, $attr, $cate_id, $categories_id) {
                 if (!empty($search)) {
                     $query->where('products.name', 'LIKE', "%$search%");
                 }
                 $product_id_arr = [];
                 if (!empty($cate_id)) {
-                    $product_ids = Product_category::where('category_id', '=', $cate_id)->get()->toArray();
+                    $product_ids = Product_category::whereIn('category_id', $categories_id)->get()->toArray();
                     $product_id_arr[] = array_column($product_ids, 'product_id');
                     // dd($product_ids);
                 }
@@ -60,7 +68,7 @@ class CategoryController extends Controller
                 }
                 return $query;
             })
-            ->orderBy($orderBy['key'], $orderBy['value'])->paginate(1);
+            ->orderBy($orderBy['key'], $orderBy['value'])->paginate(12);
         $products->load('galleries', 'variants');
         $products->appends(['search' => $search]);
         $list_categories = Category::where('parent_id', '<>', 0)->orderBy('name', 'asc')->get();
@@ -69,5 +77,6 @@ class CategoryController extends Controller
         $attributes->load('values');
 
         return view('client.category', compact('products', 'list_categories', 'attributes', 'category'));
+
     }
 }

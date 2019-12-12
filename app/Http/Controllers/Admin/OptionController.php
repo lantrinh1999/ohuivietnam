@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Option;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -11,7 +13,7 @@ use Validator;
 
 class OptionController extends Controller
 {
-
+    private $categories;
     public function index()
     {
         return view('admin.options.theme_option');
@@ -102,14 +104,14 @@ class OptionController extends Controller
                     'nullable',
                     'numeric',
                 ],
-                'point_order' => [
+                'point_bonus' => [
                     'nullable',
                     'numeric',
                 ],
             ],
             [
-                'point_order.required' => 'Mời nhập số.',
-                'point_order.numeric' => 'Mời nhập số.',
+                'point_bonus.required' => 'Mời nhập số.',
+                'point_bonus.numeric' => 'Mời nhập số.',
             ],
         );
 
@@ -129,18 +131,100 @@ class OptionController extends Controller
         $point_introduce->value = (int) $request->point_introduce;
         $point_introduce->save();
 
-        $point_order = Option::where('key', '=', 'point_order')->first();
-        if (empty($point_order->key)) {
-            $point_order = new Option();
+        $point_bonus = Option::where('key', '=', 'point_bonus')->first();
+        if (empty($point_bonus->key)) {
+            $point_bonus = new Option();
         }
-        $point_order->name = 'point_order';
-        $point_order->key = 'point_order';
-        $point_order->value = (int) $request->point_order;
-        $point_order->save();
+        $point_bonus->name = 'point_bonus';
+        $point_bonus->key = 'point_bonus';
+        $point_bonus->value = (int) $request->point_bonus;
+        $point_bonus->save();
 
         return response()->json([
             'errors' => false,
             'messages' => $request->all(),
+        ]);
+
+    }
+
+    public function menu()
+    {
+        $data = [];
+        $posts = Post::all();
+        $menu = get_option('menu');
+        $menu = json_decode($menu);
+        // dd($menu);
+        $categories = Category::GetAll()->with('getChild')->get();
+        return view('admin.options.menu', compact('menu', 'posts', 'categories'));
+    }
+
+    public function saveMenu(Request $request)
+    {
+
+        $menu = Option::where('key', '=', 'menu')->first();
+        if (empty($menu->key)) {
+            $menu = new Option();
+        }
+        $menu->name = 'menu';
+        $menu->key = 'menu';
+        $menu->value = $request->menu;
+        $menu->save();
+
+        return response()->json([
+            'errors' => false,
+            'messages' => $menu,
+        ]);
+
+    }
+
+    public function saveService(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'service.*' => [
+                    'required',
+                ],
+                'service.*.title' => [
+                    'required',
+                ],
+                'service.*.des' => [
+                    'required',
+                ],
+                'service.*.icon' => [
+                    'required',
+                ],
+            ],
+            [
+                'service.*.required' => 'Mời nhập đầy đủ thông tin.',
+                'service.*.title.required' => 'Mời nhập đầy đủ thông tin.',
+                'service.*.des.required' => 'Mời nhập đầy đủ thông tin.',
+                'service.*.icon.required' => 'Mời nhập đầy đủ thông tin.',
+            ],
+        );
+
+        if ($validator->fails()) {
+            $errors = [
+                'errors' => true,
+                'messages' => $validator->errors(),
+                'data' => $request->all(),
+            ];
+            return response($errors);
+        }
+
+        // dd($request->service);
+
+        $intro_service = Option::where('key', '=', 'intro_service')->first();
+        if (empty($intro_service->key)) {
+            $intro_service = new Option();
+        }
+        $intro_service->name = 'intro_service';
+        $intro_service->key = 'intro_service';
+        $intro_service->value = json_encode($request->service);
+        $intro_service->save();
+        return response()->json([
+            'errors' => false,
+            'messages' => $intro_service,
         ]);
 
     }

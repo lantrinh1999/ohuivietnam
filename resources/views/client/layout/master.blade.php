@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="{{asset('client')}}/css/style.css">
     <!-- Modernizer JS -->
     <script src="{{asset('client')}}/js/vendor/modernizr-2.8.3.min.js"></script>
+    <!-- Custom Style CSS by Linh -->
+    <link rel="stylesheet" href="{{asset('client/css/custom.css')}}">
     @yield('css')
 
 </head>
@@ -57,7 +59,7 @@
             <div></div>
         </div>
     </div>
-  
+
     <!-- JS
     ============================================ -->
 
@@ -115,5 +117,5 @@
     </script>
     @yield('js')
     </body>
-    
+
     </html>

@@ -7,7 +7,6 @@ Thiết lập chung
 @endsection
 
 @section('style')
-
 <style>
     .box-icon {
         padding: 0px !important;
@@ -172,10 +171,12 @@ Thiết lập chung
                                         @php
                                         $slides = get_option('slide');
                                         $count_slide = 0;
+                                        if(!empty($slide)){
+                                            $slides = json_decode($slides);
+                                        }
                                         @endphp
-                                        @if (!empty($slides))
+                                        @if (!empty($slides) && is_object($slides))
                                         @php
-                                        $slides = json_decode($slides);
                                         @endphp
                                         @foreach ($slides as $slide)
                                         <div data-num="{{ $count_slide }}" class="e-slide">
@@ -412,7 +413,7 @@ Thiết lập chung
 
 @section('js')
 <script src="{{ asset('assets/plugins/bootstrap-colorpicker.min.js') }}"></script>
-
+<script src="http://cosmetic.linhlatin.com/assets/plugins/jquery.nestable.js"></script>
 
 
 

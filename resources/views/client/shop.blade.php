@@ -1,6 +1,6 @@
 @extends('client.layout.master')
 @section('page_title')
-Ohui Việt Nam
+Shop
 @endsection
 @section('content')
 <style>
@@ -9,15 +9,27 @@ Ohui Việt Nam
         height: 30px !important;
     }
 
+    .pagination .page-item  .page-link{
+        background: white;
+        color: #a749ff;
+
+    }
+    .pagination .active .page-link{
+        background: #a749ff;
+        color:white;
+        border-color: #ddd;
+        cursor: context-menu;
+    }
+
 </style>
 <div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
     <div class="container">
         <div class="breadcrumb-content text-center">
             <ul>
                 <li>
-                    <a href="{{ url('/') }}">Home</a>
+                    <a href="{{ url('/') }}">Trang chủ</a>
                 </li>
-                <li class="active">Shop </li>
+                <li class="active">Cửa hàng </li>
             </ul>
         </div>
     </div>
@@ -102,7 +114,7 @@ Ohui Việt Nam
                                                         href="{{route('product_detail',['slug' => $item->slug])}}"> Xem
                                                         chi tiết</a>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="product-content text-center">
@@ -120,12 +132,12 @@ Ohui Việt Nam
                                                 @endphp
                                                 @for($i = 0 ; $i < 5 ; $i++)
                                                     @if ($i < $rate_star)
-                                                        <i class="fa fa-star-o yellow"></i></i> 
+                                                        <i class="fa fa-star-o yellow"></i></i>
                                                     @else
                                                         <i class="fa fa-star-o"></i>
                                                     @endif
                                                  @endfor
-                                                
+
                                             </div>
                                             <div class="product-price">
                                                 @if ($item->is_simple == -1)

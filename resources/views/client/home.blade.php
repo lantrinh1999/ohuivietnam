@@ -3,6 +3,13 @@
     Ohui Việt Nam
 @endsection
 @section('content')
+@php
+    $slides = get_option('slide');
+    if(!empty($slides)){
+        $slides = json_decode($slides);
+    }
+    //dd($slides);
+@endphp
 <div class="slider-area">
     <div class="slider-active owl-carousel nav-style-1">
         <div class="single-slider slider-height-1 bg-purple">
@@ -10,16 +17,23 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12 col-sm-6">
                         <div class="slider-content slider-animated-1">
-                            <h3 class="animated">Mỹ phẩm chính hãng giá tốt</h3>
-                            <h1 class="animated">Summer Offer <br>2019 Collection</h1>
+                            <h3 class="animated">{{ !empty($slides[0]->title) ? $slides[0]->title : '' }}</h3>
+                            <h1 class="animated">
+                                @php
+                                    echo !empty($slides[0]->content) ? preg_replace('%<p(.*?)>|</p>%s','',$slides[0]->content) : '';
+                                @endphp
+                            </h1>
+
+                            @if (!empty($slides[0]->link) && $slides[0]->link != '#' && filter_var($slides[0]->link, FILTER_VALIDATE_URL) !== false)
                             <div class="slider-btn btn-hover">
-                                <a class="animated" href="shop.html">Xem thêm</a>
+                                <a class="animated" href="{{ $slides[0]->link }}">Xem thêm</a>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12 col-sm-6">
                         <div class="slider-single-img slider-animated-1">
-                            <img class="animated" style="width: 730px;height: 600px;margin-left: 50px;padding-bottom: 30px;padding-top: 30px" src="https://bizweb.dktcdn.net/100/341/018/themes/714660/assets/banner2a.jpg?1555408132363" alt="">
+                            <img class="animated" style="width: 730px;height: 600px;margin-left: 50px;padding-bottom: 30px;padding-top: 30px" src="{{ $slides[0]->image }}" alt="">
                         </div>
                     </div>
                 </div>
@@ -147,7 +161,7 @@
                                         @endphp
                                         @for($i = 0 ; $i < 5 ; $i++)
                                             @if ($i < $rate_star)
-                                                <i class="fa fa-star-o yellow"></i></i> 
+                                                <i class="fa fa-star-o yellow"></i></i>
                                             @else
                                                 <i class="fa fa-star-o"></i>
                                             @endif
@@ -243,7 +257,7 @@
                                     @endphp
                                     @for($i = 0 ; $i < 5 ; $i++)
                                         @if ($i < $rate_star)
-                                            <i class="fa fa-star-o yellow"></i></i> 
+                                            <i class="fa fa-star-o yellow"></i></i>
                                         @else
                                             <i class="fa fa-star-o"></i>
                                         @endif
@@ -338,7 +352,7 @@
                                     @endphp
                                     @for($i = 0 ; $i < 5 ; $i++)
                                         @if ($i < $rate_star)
-                                            <i class="fa fa-star-o yellow"></i></i> 
+                                            <i class="fa fa-star-o yellow"></i></i>
                                         @else
                                             <i class="fa fa-star-o"></i>
                                         @endif
@@ -388,7 +402,7 @@
                         </div>
                         <div class="blog-content-wrap">
                             <div class="blog-content text-center">
-                              
+
                                 @php
                                 $name_post = '';
                                 if (strlen($post->name) > 65) {
@@ -398,14 +412,14 @@
                                 }
 
                                 @endphp
-                                
+
                                 <h3><a href="{{route('detail_post',['slug'=> $post->slug])}}">{{$name_post}}</a></h3>
                                 <span>Admin</a></span>
                             </div>
                         </div>
                     </div>
                 </div>
-            @endforeach  
+            @endforeach
         </div>
     </div>
 </div>
