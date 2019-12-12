@@ -1,0 +1,51 @@
+.no-sort::after {
+    display: none !important;
+    width: 50px !important;
+}
+
+input[type=checkbox] {
+    cursor: pointer;
+}
+
+/* .no-sort {
+    pointer-events: none !important;
+    cursor: default !important;
+} */
+
+
+td:hover .div-action {
+    display: block;
+    visibility: visible;
+}
+
+.div-action {
+    visibility: hidden;
+}
+
+.td-action a:hover {
+    color: #000000;
+}
+
+
+
+
+@media only screen and (max-width: 767px) {
+    .logo {
+        display: none !important;
+    }
+
+    .fixed .content-wrapper,
+    .fixed .right-side {
+        padding-top: 50px !important;
+    }
+    .main-sidebar {
+        padding-top:  50px !important;
+    }
+}
+.skin-purple .sidebar-menu>li.active>a {
+    border-left-color: #606c70
+}
+
+.skin-purple-light .sidebar-menu>li.active {
+    border-left-color: #606c70
+}

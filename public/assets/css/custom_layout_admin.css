@@ -1,0 +1,19 @@
+@media (min-width: 768px) {
+    .main-header .logo {
+        width: 175px;
+    }
+
+    .main-header .navbar {
+        margin-left: 175px;
+    }
+
+    .main-sidebar {
+        width: 175px;
+    }
+
+    .content-wrapper,
+    .main-footer {
+        margin-left: 175px;
+
+    }
+}
