@@ -25,14 +25,14 @@ Trang quản trị
         <!-- small box -->
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{ !empty($orders) ? $orders : 0 }}</h3>
 
-                <p>Đơn hàng mới</p>
+                <p>Đơn hàng</p>
             </div>
             <div class="icon">
                 <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin.orders.index') }}" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -40,14 +40,14 @@ Trang quản trị
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-                <h3>51<sup style="font-size: 20px"></sup></h3>
+                <h3>{{ !empty($comments) ? $comments : 0 }}<sup style="font-size: 20px"></sup></h3>
 
-                <p>Đánh giá sản phẩm mới</p>
+                <p>Đánh giá sản phẩm</p>
             </div>
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin.comments.index') }}" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -55,14 +55,14 @@ Trang quản trị
         <!-- small box -->
         <div class="small-box bg-yellow">
             <div class="inner">
-                <h3>1022</h3>
+                <h3>{{ !empty($customers) ? $customers : 0 }}</h3>
 
                 <p>Khách hàng</p>
             </div>
             <div class="icon">
                 <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin.users.index') }}?role=1" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -70,14 +70,14 @@ Trang quản trị
         <!-- small box -->
         <div class="small-box bg-red">
             <div class="inner">
-                <h3>65</h3>
+                <h3>{{ !empty($products) ? $products : 0 }}</h3>
 
                 <p>Sản phẩm</p>
             </div>
             <div class="icon">
                 <i class="ion ion-ios-albums"></i>
             </div>
-            <a href="#" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin.products.index') }}" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->

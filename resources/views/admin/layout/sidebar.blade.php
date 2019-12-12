@@ -5,11 +5,13 @@
         <div class="user-panel">
             <div class="pull-left image">
                 {{-- {{dd(Auth::user())}} --}}
-                <img src="{{Auth::check() && !empty(Auth::user()->avatar) ? Auth::user()->avatar : asset('assets/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                <img src="{{Auth::check() && !empty(Auth::user()->avatar) ? Auth::user()->avatar : asset('assets/img/user2-160x160.jpg') }}"
+                    class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{Auth::check() && !empty(Auth::user()->account->name) ? Auth::user()->account->name : 'Chưa cập nhập' }}</p>
-                <a ><i class="fa fa-circle text-success"></i> Online</a>
+                <p>{{Auth::check() && !empty(Auth::user()->account->name) ? Auth::user()->account->name : 'Chưa cập nhập' }}
+                </p>
+                <a><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
         <!-- search form -->
@@ -35,47 +37,43 @@
                 </a>
             </li>
 
-        <!-- Danh sách đơn hàng -->
-        <li class="treeview {{ activeNav('orders') }}">
-            <a href="javascript:;">
-                <i class="fa fa-shopping-cart"></i>
-                <span>Đơn hàng <span
-                        class="label label-danger">{{DB::table('orders')->where('status',1)->count()}}</span></span>
-                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-            </a>
-            <ul class="treeview-menu">
-                <li class="{{ activeNav('orders','index') }}">
-                    <a href="{{ route('admin.orders.index') }}"><i class="fa fa-list"></i>Danh sách</a>
-                </li>
+            <!-- Danh sách đơn hàng -->
+            <li  class="{{ activeNav('orders') }}">
+                <a href="{{ route('admin.orders.index') }}">
+                    <i class="fa fa-shopping-cart"></i> <span>Đơn hàng</span>
+                    <span class="pull-right-container">
+                        <small class="label pull-right bg-green">{{ DB::table('orders')->where('status',1)->count() }}</small>
+                    </span>
+                </a>
+            </li>
+            <!-- Sản phẩm -->
+            <li
+                class="treeview {{ activeNav('categories') }} {{ activeNav('attribute') }} {{ activeNav('products') }} {{ activeNav('colors') }}">
+                <a href="javascript:;">
+                    <i class="fa fa-archive"></i>
+                    <span>Sản phẩm</span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{ activeNav('products','index') }} ">
+                        <a href="{{ route('admin.products.index') }}"><i class="fa fa-list"></i>Tất cả sản phẩm</a>
+                    </li>
+                    <li class="{{ activeNav('products','add') }}">
+                        <a href="{{ route('admin.products.add') }}"><i class="fa fa-plus-square"></i>Thêm mới</a>
+                    </li>
+                    <li class="{{ activeNav('categories','index') }}">
+                        <a href="{{ route('admin.categories.index') }}"><i class="fa fa-list"></i>Danh mục</a>
+                    </li>
+                    <li class="{{ activeNav('attribute') }}">
+                        <a href="{{ route('admin.attribute.index') }}"><i class="fa  fa-eyedropper"></i>Các thuộc
+                            tính</a>
+                    </li>
+                </ul>
+            </li>
 
-            </ul>
-        </li>
-        <!-- Sản phẩm -->
-        <li
-            class="treeview {{ activeNav('categories') }} {{ activeNav('attribute') }} {{ activeNav('products') }} {{ activeNav('colors') }}">
-            <a href="javascript:;">
-                <i class="fa fa-archive"></i>
-                <span>Sản phẩm</span>
-                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-            </a>
-            <ul class="treeview-menu">
-                <li class="{{ activeNav('products','index') }} ">
-                    <a href="{{ route('admin.products.index') }}"><i class="fa fa-list"></i>Tất cả sản phẩm</a>
-                </li>
-                <li class="{{ activeNav('products','add') }}">
-                    <a href="{{ route('admin.products.add') }}"><i class="fa fa-plus-square"></i>Thêm mới</a>
-                </li>
-                <li class="{{ activeNav('categories','index') }}">
-                    <a href="{{ route('admin.categories.index') }}"><i class="fa fa-list"></i>Danh mục</a>
-                </li>
-                <li class="{{ activeNav('attribute') }}">
-                    <a href="{{ route('admin.attribute.index') }}"><i class="fa  fa-eyedropper"></i>Các thuộc tính</a>
-                </li>
-            </ul>
-        </li>
-
-        <!-- Giảm giá -->
-        <li class="treeview {{ Request::segment(2)  == 'discounts' ?  activeNav('discounts') : ' '}}  {{Request::segment(2)  == 'vouchers' ?  activeNav('vouchers') : '' }}">
+            <!-- Giảm giá -->
+            <li
+                class="treeview {{ Request::segment(2)  == 'discounts' ?  activeNav('discounts') : ' '}}  {{Request::segment(2)  == 'vouchers' ?  activeNav('vouchers') : '' }}">
                 <a href="javascript:;">
                     <i class="fa fa-gift"></i>
                     <span>Giảm giá</span>
@@ -128,7 +126,7 @@
                 </ul>
             </li>
             <!-- Danh sách Trang -->
-             <li class="treeview {{ activeNav('pages') }}">
+            <li class="treeview {{ activeNav('pages') }}">
                 <a href="javascript:;">
                     <i class="fa fa-copy"></i>
                     <span>Trang</span>

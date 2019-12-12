@@ -139,3 +139,12 @@ if (!function_exists('_genUrl')) {
     }
 
 }
+// count Orders
+if (!function_exists('countOrders')) {
+    function countOrders($status = 1)
+    {
+        return DB::table('orders')->where('status', '=', (int) $status)->count();
+
+    }
+
+}

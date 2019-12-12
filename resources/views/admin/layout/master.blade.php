@@ -27,9 +27,11 @@
                 display: block;
                 visibility: visible;
             }
+
             .dataTables_length {
-                float:left;
+                float: left;
             }
+
             .pull-right {
                 margin-right: 5px;
             }
@@ -62,12 +64,15 @@
             input:read-only:hover {
                 cursor: default;
             }
+
             .content-wrapper {
                 min-height: 96vh !important;
             }
+
             html {
                 min-height: 100vh !important;
             }
+
             body {
                 min-height: 100vh !important;
             }
@@ -80,6 +85,7 @@
     </head>
     <div id="fb-root"></div>
     <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6"></script>
+
     <body class="hold-transition skin-linh sidebar-mini fixed">
         <div class="wrapper">
             @include('admin.layout.header')
@@ -138,53 +144,72 @@
         @include('ckfinder::setup')
         {{-- <script type="text/javascript" src="{{ asset('/js/ckfinder/ckfinder.js')}}"></script> --}}
         <script>
-            CKFinder.config( { connectorPath: '/ckfinder/connector' } );
+            CKFinder.config({
+                connectorPath: '/ckfinder/connector'
+            });
+
         </script>
         <script>
-            // $(function () {
-            //     $('#dataTables2').DataTable({
-            //         "ordering": true,
-            //         "stateSave": true,
-            //         //'searching': false,
-            //         "language": {
-            //             "lengthMenu": "_MENU_",
-            //             "zeroRecords": "Không có dữ liệu để hiển thị",
-            //             "info": "",
-            //             // "infoEmpty": "No records available",
-            //             "infoEmpty": "Không có dữ liệu để hiển thị",
-            //             // "infoFiltered": "(filtered from _MAX_ total records)",
-            //             "infoFiltered": "(_MAX_/tổng số)",
-            //             "search": 'Tìm kiếm: ',
-            //             "paginate": {
-            //                 "first": "Trang đầu",
-            //                 "last": "Trang cuối",
-            //                 "next": "Trang sau",
-            //                 "previous": "Trang trước"
-            //             },
-            //         }
-            //     })
-            // })
-            // $(function () {
-            //     $('#dataTables').DataTable({
-            //         "ordering": true,
-            //         "language": {
-            //             "lengthMenu": "_MENU_ bản ghi/trang",
-            //             "zeroRecords": "Không có dữ liệu để hiển thị",
-            //             "info": "_PAGE_/_PAGES_",
-            //             // "infoEmpty": "No records available",
-            //             "infoEmpty": "Không có dữ liệu để hiển thị",
-            //             // "infoFiltered": "(filtered from _MAX_ total records)",
-            //             "infoFiltered": "(_MAX_/tổng số)",
-            //             "search": 'Tìm kiếm: ',
-            //             "paginate": {
-            //                 "first": "Trang đầu",
-            //                 "last": "Trang cuối",
-            //                 "next": "Trang sau",
-            //                 "previous": "Trang trước"
-            //             },
-            //         }
-            //     })
-            // })
+            // Biến dùng kiểm tra nếu đang gửi ajax thì ko thực hiện gửi thêm
+            var is_busy = false;
+
+            // Biến lưu trữ trang hiện tại
+            var page = 1;
+
+            // Biến lưu trữ rạng thái phân trang
+            var stopped = false;
+
+            $(document).ready(function () {
+                // Khi kéo scroll thì xử lý
+                $(window).scroll(function () {
+                    // Element append nội dung
+                    $element = $('body').find('.notifications-menu .menu');
+
+                    // ELement hiển thị chữ loadding
+                    $loadding = $('body').find('.notifications-menu .menu .loadding');
+
+                    // Nếu màn hình đang ở dưới cuối thẻ thì thực hiện ajax
+                    if ($(window).scrollTop() + $(window).height() >= $element.height()) {
+                        // Nếu đang gửi ajax thì ngưng
+                        if (is_busy == true) {
+                            return false;
+                        }
+
+                        // Nếu hết dữ liệu thì ngưng
+                        if (stopped == true) {
+                            return false;
+                        }
+
+                        // Thiết lập đang gửi ajax
+                        is_busy = true;
+
+                        // Tăng số trang lên 1
+                        page++;
+
+                        // Hiển thị loadding
+                        $loadding.removeClass('hidden');
+
+                        // Gửi Ajax
+                        $.ajax({
+                                type: 'POST',
+                                dataType: 'json',
+                                url: '{{ route('admin.getNewOrders') }}',
+                                data: {
+                                    page: page
+                                },
+                                success: function (result) {
+                                    $element.append(result);
+                                }
+                            })
+                            .always(function () {
+                                // Sau khi thực hiện xong ajax thì ẩn hidden và cho trạng thái gửi ajax = false
+                                $loadding.addClass('hidden');
+                                is_busy = false;
+                            });
+                        return false;
+                    }
+                });
+            });
 
         </script>
         @yield('js')

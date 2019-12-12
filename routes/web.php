@@ -82,8 +82,6 @@ Route::group(['namespace' => 'Client'], function () {
     // trang lien he fake
     Route::get('lien-he', 'PageController@contact')->name('contact');
 
-
-
 });
 
 Route::group(['namespace' => 'Client', 'middleware' => ['checkIsLogin']], function () {
@@ -121,7 +119,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkIsAdmin'], 'namespace'
      */
 
     Route::get('/', 'HomeController@index')->name('home');
-
+    Route::any('getNewOrders', 'HomeController@getNewOrders')->name('getNewOrders');
     /*
      * Categories
      */

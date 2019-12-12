@@ -38,7 +38,7 @@ Danh sách
 
     <div class="col-sm-12">
         <div class="box">
-            
+
 
             <!-- ********** -->
             <!-- ********** -->
@@ -51,11 +51,11 @@ Danh sách
                     <table id="dataTables" class="table table-active table-active">
                         <thead>
                             <tr>
-                                <th class="sorting_disabled no-sort" rowspan="1" colspan="1" style="width: 50px;">
+                                <th width="5px" class="sorting_disabled no-sort" rowspan="1" colspan="1" style="width: 5px;">
                                     <input id="checkAll" value="all" class="checkAll" type="checkbox" name="checkAll">
                                 </th>
-                                <th>Khách hàng</th>
-                                <th>Số sao</th>
+                                <th  width="90px" style="width: 90px !important">Khách hàng</th>
+                                <th width="70px" style="width: 70px !important">Số sao</th>
                                 <th style="width:40% !important">Đánh giá</th>
                                 <th>Sản phẩm</th>
                                 <th style="width:150px !important">Thêm lúc</th>
@@ -72,18 +72,18 @@ Danh sách
                                         </div>
                                     </td>
                                     <td>
-                                        {{-- <i style="display:none">4</i> --}}
+                                        <i style="display:none">{{ $item->rate_star }}</i>
                                         @for( $i=0;$i < 5;$i++)
                                             @if ($i < $item->rate_star)
                                                 <i class="fa fa-star"></i>
                                             @else
                                                 <i class="fa fa-star-o"></i>
-                                            @endif  
+                                            @endif
                                         @endfor
                                     </td>
-                                
+
                                     <td>{{$item->content}}</td>
-                                   
+
                                     <td>
                                         <a href="{{route('product_detail',['slug' => $item->slug])}}">{{$item->product->name}}</a>
                                     </td>
@@ -226,7 +226,7 @@ Danh sách
                                             "success").then(function() {
                                             window.location.reload();
                                         });
-                                    
+
                                 };
                             })
                 } else {

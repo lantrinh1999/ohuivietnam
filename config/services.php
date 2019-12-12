@@ -12,7 +12,7 @@ return [
     | location for this type of information, allowing packages to have
     | a conventional file to locate the various service credentials.
     |
-    */
+     */
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -34,16 +34,22 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
+    // 'facebook' => [
+    //     'client_id' => '512165249633902',
+    //     'client_secret' => 'dbce9c544db6931808f2eab65b6ffc3f',
+    //     'redirect' => 'https://ohuivietnam.gq/login/callback/facebook',
+    // ],
+
     'facebook' => [
-        'client_id' => '512165249633902',
-        'client_secret' => 'dbce9c544db6931808f2eab65b6ffc3f',
-        'redirect' => 'https://ohuivietnam.tk/login/callback/facebook',
+        'client_id' => env('FB_CLIENT_ID'),
+        'client_secret' => env('FB_CLIENT_SECRET'),
+        'redirect' => env('FB_REDIRECT'),
     ],
 
     'google' => [
-        'client_id' => '581609192053-hn2svpm55lqef11j79h7nv0gdfcj4tg7.apps.googleusercontent.com',
-        'client_secret' => 'phyOZX9Cbg2qLvAWowvqRFh-',
-        'redirect' => 'https://ohuivietnam.tk/login/callback/google',
+        'client_id' => env('GG_CLIENT_ID'),
+        'client_secret' => env('GG_CLIENT_SECRET'),
+        'redirect' => env('GG_REDIRECT'),
     ],
 
 ];

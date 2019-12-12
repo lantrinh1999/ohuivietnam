@@ -168,20 +168,20 @@ input[type=checkbox] {
 /* sidebar */
 @media (min-width: 767px) {
     .main-header .logo {
-        width: 175px ;
+        width: 200px ;
     }
 
     .main-header .navbar {
-        margin-left: 175px;
+        margin-left: 200px;
     }
 
     .main-sidebar {
-        width: 175px;
+        width: 200px;
     }
 
     .content-wrapper,
     .main-footer {
-        margin-left: 175px;
+        margin-left: 200px;
 
     }
 }
