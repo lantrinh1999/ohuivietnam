@@ -37,7 +37,7 @@
                     <ul>
                         <li class="{{Request::segment(2) == 'doi-diem' ? 'active' : ''}}"><a
                                 href="{{route('get_reward')}}">Đổi điểm</a></li>
-                        <li><a href="sanphamyeuthich.php">Sản phẩm yêu thích</a></li>
+
                         <li class="{{Request::segment(2) == 'thong-tin' ? 'active' : ''}}"><a
                                 href="{{route('info_account')}}">Thông tin tài khoản</a></li>
                         @if (Auth::check() && Auth::user()->role == 1)
@@ -170,8 +170,8 @@
         let orders = `<?php echo json_encode($orders) ?>`;
         orders_decode = JSON.parse(orders);
         orders_decode = orders_decode.data;
-       
-        
+
+
         $(document).on('click','.show_detail',function() {
             id = $(this).attr('data-id');
             small_order = orders_decode.filter((order) => {
@@ -179,7 +179,7 @@
             });
             html = '';
             small_order[0].order_details.forEach(element => {
-                
+
                 $('#exampleModalCenter').find('.modal-title').html(`Đơn hàng <span style="font-weight: 500;"> #${small_order[0].code} </span>`);
                 if (small_order[0].payment_method == 1) {
                     payment_method_text = 'Thanh toán online';
@@ -191,9 +191,9 @@
                 }else{
                     payment_method_status = 'Đã thanh toán';
                 }
-                
+
                 small_order[0].note != null ? note = small_order[0].note : note = 'Không';
-                
+
                 $('#exampleModalCenter').find('.content').html(
                 `<p>Phương thức thanh toán : ${payment_method_text}</p>
                 <p>Trạng thái thanh toán : ${payment_method_status}</p>
@@ -222,12 +222,12 @@
                         price_product = price_product.replace('.00', "đ");
                     }
                 }
-                
+
 
                 element.value != null ? name_value = element.value.name : name_value ='';
                 amount = element.amount.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                 amount = amount.replace('.00', "đ");
-                html += `<tr> 
+                html += `<tr>
                             <td><a href="/${element.product.slug}.html"> ${element.product.name + ' ' + name_value }</a></td>
                             <td>${price_product}</td>
                             <td>${element.quantity}</td>
@@ -236,7 +236,7 @@
                 $('.detail_order').html(html);
             });
             // console.log(small_order);
-        })        
+        })
 
     })
 </script>

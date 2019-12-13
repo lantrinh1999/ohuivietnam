@@ -8,17 +8,7 @@ Ohui Việt Nam
         width: 100% !important;
         height: 30px !important;
     }
-    .pagination .page-item  .page-link{
-        background: white;
-        color: #a749ff;
 
-    }
-    .pagination .active .page-link{
-        background: #a749ff;
-        color:white;
-        border-color: #ddd;
-        cursor: context-menu;
-    }
 
 
 </style>

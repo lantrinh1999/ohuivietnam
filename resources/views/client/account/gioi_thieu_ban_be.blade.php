@@ -38,7 +38,7 @@ Giới thiệu bạn bè
                 <div class="contact-info-sidebar">
                     <ul>
                         <li class="{{Request::segment(2) == 'doi-diem' ? 'active' : ''}}"><a href="{{route('get_reward')}}">Đổi điểm</a></li>
-                        <li><a href="sanphamyeuthich.php">Sản phẩm yêu thích</a></li>
+
                         <li class="{{Request::segment(2) == 'thong-tin' ? 'active' : ''}}"><a href="{{route('info_account')}}">Thông tin tài
                                 khoản</a></li>
                         @if (Auth::check() && Auth::user()->role == 1)
@@ -70,7 +70,7 @@ Giới thiệu bạn bè
                                     margin: 5px auto 25px auto;">
                             </div>
                             <p>Chia sẻ mã giới thiệu với bạn bè ngay để nhận ưu đãi</p>
-                            <div class="share_button" style="margin-top: 30px;margin-bottom: 30px;text-align:center"> 
+                            <div class="share_button" style="margin-top: 30px;margin-bottom: 30px;text-align:center">
                                 <button><a target="_blank" href="https://twitter.com/intent/tweet?url={{Auth::check() ? Auth::user()->refferal_code : ''}}&amp;text=Tham gia ngay với tôi và nhập mã '{{Auth::check() ? Auth::user()->refferal_code : ''}}' để nhận được 500đ&amp;via={{url('')}}&amp;hashtags=OhuiVietNam"> <i class="fa fa-twitter" aria-hidden="true"></i> TWEET</a></button>
                                 <button><a target="_blank" href="https://api.whatsapp.com/send?text={{Auth::check() ? Auth::user()->refferal_code : ''}}"><i target="_blank" class="fa fa-whatsapp"></i> WHATSAPP</a></button>
                                 <button><a href="https://www.facebook.com/sharer.php?u={{url('')}}?description=Dialogs%20provide%20a%20simple,%20consistent%20interface%20for%20applications%20to%20interact%20with%20users.&
@@ -86,13 +86,13 @@ Giới thiệu bạn bè
                                     <div class="lion-referral-widget-main__share-link-url" style="text-transform: none;display: inline-block;font-size: 18px;font-weight:500">{{Auth::check() ? Auth::user()->refferal_code : ''}}</div>
                                         <a class="btn" style="background: #a749ff;color: white;"><i class="fa fa-clipboard" aria-hidden="true" data-code="{{Auth::check() ? Auth::user()->refferal_code : ''}}"></i></a>
                                         <i class="fa fa-check" aria-hidden="true" style="opacity: 0;color:green"></i>
-                                   
+
                                 </div>
                             </div>
                             </button>
                         </div>
                     </div>
-                    
+
                 </div>
 
             </div>

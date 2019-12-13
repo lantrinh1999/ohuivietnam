@@ -36,7 +36,7 @@
                 <div class="contact-info-sidebar">
                     <ul>
                         <li class="{{Request::segment(2) == 'doi-diem' ? 'active' : ''}}"><a href="{{route('get_reward')}}">Đổi điểm</a></li>
-                        <li><a href="sanphamyeuthich.php">Sản phẩm yêu thích</a></li>
+
                         <li class="{{Request::segment(2) == 'thong-tin' ? 'active' : ''}}"><a href="{{route('info_account')}}">Thông tin tài
                                 khoản</a></li>
                         @if (Auth::check() && Auth::user()->role == 1)
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="col-lg-9 col-md-8">
-                
+
                     <div class="contact-info-content" style="margin-bottom: 30px;">
                         <div class="contact-info-content-title mb-30">
                             <h2>Đổi điểm</h2>
@@ -69,7 +69,7 @@
                             </div>
                         @endforeach
                     </div>
-                    
+
                     @if (count($vouchers) > 0 && !empty($vouchers))
                         <div class="my-voucher">
                             <h3>Voucher đã đổi</h3>
@@ -102,15 +102,15 @@
                             {{$vouchers->links()}}
                         </div>
                     @endif
-                    
-                
+
+
             </div>
         </div>
-        
+
     </div>
     <div id="getModal" class="modal fade in" role="dialog" style="margin-top: 10%;">
         <div class="modal-dialog">
-    
+
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -119,7 +119,7 @@
                 </div>
                 <div class="modal-body"><input type="hidden" id="rgid" value="6">
                     <div class="text-center">
-                        
+
                         <p>Sử dụng <span style="font-weight:bold" class="point_lost"></span> điểm</p>
                         <p>Để nhận <span style="font-weight:bold" class="title_lost"></span></p>
                         <div class="action">
@@ -130,7 +130,7 @@
                     </div>
                 </div>
             </div>
-    
+
         </div>
     </div>
 </div>
@@ -155,7 +155,7 @@
 			},1000);
 		})
 
-	
+
     $(document).on('click','.fa-copy',function(e){
         value = $(this).parent('td').find('.voucher_code').html();
         document.execCommand("copy");
@@ -172,7 +172,7 @@
 
         data_value = $(this).parent('div').find('button').attr('data-value');
 
-       
+
         $('.point_lost').html(point);
         $('.title_lost').html(title);
 
@@ -184,7 +184,7 @@
     });
 
     $('.btn-access').on('click',function(){
-        
+
         swal("Bạn muốn đổi voucher này ?", {
             buttons: ["Không!", true],
             icon: "warning",
@@ -214,7 +214,7 @@
                                 if (value == true) {
                                     window.location.reload();
                                 };
-                            }); 
+                            });
                         }else{
                             swal({
                                 title: "Sự cố!",

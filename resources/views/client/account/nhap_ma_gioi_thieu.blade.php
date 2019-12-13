@@ -39,7 +39,7 @@ Nhập mã giới thiệu
                 <div class="contact-info-sidebar">
                     <ul>
                         <li class="{{Request::segment(2) == 'doi-diem' ? 'active' : ''}}"><a href="{{route('get_reward')}}">Đổi điểm</a></li>
-                        <li><a href="sanphamyeuthich.php">Sản phẩm yêu thích</a></li>
+
                         <li class="{{Request::segment(2) == 'thong-tin' ? 'active' : ''}}"><a href="{{route('info_account')}}">Thông tin tài
                                 khoản</a></li>
                         @if (Auth::check() && Auth::user()->role == 1)
@@ -74,12 +74,12 @@ Nhập mã giới thiệu
                             @endphp
                             <p>Nhập mã từ người giới thiệu bạn. Bạn và người đó sẽ nhận được {{$point_introduce}} điểm thưởng để đổi các voucher có giá trị</p>
                             <p>(Lưu ý: Mỗi người có thể sử dụng chức năng này 1 lần)</p>
-                            
+
                             <div class="form-group">
-                                <form id="create_"> 
+                                <form id="create_">
                                     <div style="font-size:14px">Nhập mã</div>
                                     <input type="text" name="code" style="text-align:center;border-radius: 5px;border: 1px solid gray;">
-                                    
+
                                     <a style="font-size: 14px;color:white;margin-top:10px" class="btn-send btn btn-success">Xác nhận</a>
                                 </form>
                             </div>
@@ -100,9 +100,9 @@ Nhập mã giới thiệu
 @section('js')
 <script src="{{ asset('assets/plugins/sweet-alert/sweetalert.min.js')}}"></script>
 <script>
-   $('.btn-send').on('click',function(){ 
+   $('.btn-send').on('click',function(){
        code = $(this).parent('#create_').find('input').val();
-      
+
         $.ajax({
             type: "POST",
             url: `{{route('use_refferal_code')}}`,
@@ -124,7 +124,7 @@ Nhập mã giới thiệu
                         if (value == true) {
                             window.location.href = "{{route('history_reward')}}";
                         };
-                    }); 
+                    });
                 }else{
                     swal({
                         title: "Thất bại!",
@@ -134,7 +134,7 @@ Nhập mã giới thiệu
                     });
                 }
             }
-        });     
+        });
     })
 </script>
 @endsection

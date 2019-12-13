@@ -19,7 +19,7 @@ Thông tin
         width: 1px;
         visibility: hidden;
     }
-</style>    
+</style>
 @endsection
 
 
@@ -46,7 +46,7 @@ Thông tin
                 <div class="contact-info-sidebar">
                     <ul>
                         <li class="{{Request::segment(2) == 'doi-diem' ? 'active' : ''}}"><a href="{{route('get_reward')}}">Đổi điểm</a></li>
-                        <li><a href="sanphamyeuthich.php">Sản phẩm yêu thích</a></li>
+
                         <li class="{{Request::segment(2) == 'thong-tin' ? 'active' : ''}}"><a href="{{route('info_account')}}">Thông tin tài
                                 khoản</a></li>
                         @if (Auth::check() && Auth::user()->role == 1)
@@ -76,7 +76,7 @@ Thông tin
                                 <p style="margin-left:21%;color:red" class="err_name" ></p>
                             </div>
                             <div class="form-group">
-                                <label>Email</label> 
+                                <label>Email</label>
                                 <input type="text" name="email" disabled="disabled" value="{{Auth::check() ? Auth::user()->email : '' }}">
                             </div>
                             <div class="form-group">
@@ -97,7 +97,7 @@ Thông tin
                                 <label class="checkbox">
                                     <input type="checkbox" id="is_change_pass" name="is_change_pass">
                                     <span class="ico"></span> Thay đổi mật khẩu
-                                </label> 
+                                </label>
                             </div>
                             <div class="pass_change" style="display:none">
                                 <div class="form-group" style="position: relative;">
@@ -115,7 +115,7 @@ Thông tin
                             </div>
                             <a class="btn btn btn-success submit_edit_account" style="color:white">Cập nhật</a>
                         </form>
-                
+
                     </div>
                 </div>
 
@@ -139,8 +139,8 @@ Thông tin
         }
     });
 
-    
-    
+
+
     function showpass(current){
         // console.log(current);
         if (!$(current).hasClass('show')) {
@@ -154,7 +154,7 @@ Thông tin
         }
         return true;
     };
-    
+
 
 
     $(function(){
@@ -168,12 +168,12 @@ Thông tin
             var reader = new FileReader();
 
             reader.onload = function (e) {
-            
+
                      $('#blah')
                     .attr('src', e.target.result)
                     .width(250)
                     .height(250)
-                    
+
             };
             reader.readAsDataURL(input.files[0]);
         }
@@ -190,7 +190,7 @@ Thông tin
             processData: false,
             method:"POST",
             data: formData,
-            success:function(msg){ 
+            success:function(msg){
                 if (msg.err == false) {
                     swal({
                         title: "Thành công!",
@@ -201,15 +201,15 @@ Thông tin
                         if (value == true) {
                             window.location.reload();
                         };
-                    }); 
+                    });
                 }else{
                     console.log(msg.messages.name);
-                    typeof msg.messages.name !== 'undefined' ? $('#create_').find('.err_name').html(msg.messages.name[0]) : 
+                    typeof msg.messages.name !== 'undefined' ? $('#create_').find('.err_name').html(msg.messages.name[0]) :
                     $('#create_').find('.err_name').html('');
                     typeof msg.messages.new_password !== 'undefined' ? $('#create_').find('.err_new_password').html(msg.messages.new_password[0]) :
                     $('#create_').find('.err_new_password').html('');
                     typeof msg.messages.old_password !== 'undefined' ? $('#create_').find('.err_old_password').html(msg.messages.old_password[0]) :
-                    $('#create_').find('.err_old_password').html(''); 
+                    $('#create_').find('.err_old_password').html('');
                 }
             }
         });

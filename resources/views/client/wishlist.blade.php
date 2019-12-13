@@ -20,7 +20,8 @@ Sản phẩm yêu thích
         {{-- <h3 class="cart-page-title">Your cart items</h3> --}}
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="#">
+                @if (count($products) > 0 && !empty($products))
+                    <form action="#">
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>
@@ -28,51 +29,54 @@ Sản phẩm yêu thích
                                     <th>Ảnh</th>
                                     <th>Tên</th>
                                     <th>Giá</th>
-                                
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $products = DB::table('wishlists')->where('user_id',Auth::user()->id)->orderBy('id','desc')->limit(5)->get();
-                                    
-                                @endphp
-                                {{-- @foreach ($products as $item1)
-                                    @php $item = get_product_by_id($item1->id) @endphp
-                                    
+
+                                @foreach ($products as $item1)
+                                    @php
+                                        $item = $item1->product;
+                                    @endphp
+
                                     <tr>
                                         <td class="product-thumbnail">
-                                            <a href="#"><img src="assets/img/cart/cart-1.png" alt=""></a>
+                                            <a href="{{route('product_detail',$item->slug)}}" target="_blank"><img style="width: 100px;" src="{{!empty($item->image) ? $item->image : ''}}" alt=""></a>
                                         </td>
-                                        <td class="product-name"><a href="#">{{!empty($item->name) ? $item->name : '' }}</a></td>
+                                        <td class="product-name"><a target="_blank" href="{{route('product_detail',$item->slug)}}">{{!empty($item->name) ? $item->name : '' }}</a></td>
                                         <td class="product-price-cart"><span class="amount">
                                         @if ($item->is_simple == -1)
                                             @if (count($item->variants) > 0)
-                                            @if (!empty($item->variants[0]->sale_price))
-                                                <span>{{ohui_number_format($item->variants[0]->sale_price)}}</span>
-                                                <span class="old">{{ohui_number_format($item->variants[0]->regular_price)}}</span>
-                                            @else
-                                                <span>{{ohui_number_format($item->variants[0]->regular_price)}}</span>
-                                            @endif
+                                                @if (!empty($item->variants[0]->sale_price))
+                                                    <span>{{ohui_number_format($item->variants[0]->sale_price)}}</span>
+                                                @else
+                                                    <span>{{ohui_number_format($item->variants[0]->regular_price)}}</span>
+                                                @endif
                                             @endif
                                         @else
                                             @if (!empty($item->sale_price))
                                                 <span >{{ohui_number_format($item->sale_price)}}</span>
-                                                <span class="old">{{ohui_number_format($item->regular_price)}}</span>
                                             @else
                                                 <span>{{ohui_number_format($item->regular_price)}}</span>
                                             @endif
-                                        @endif    
+                                        @endif
                                         </span></td>
-                                    
-                                        <td class="product-subtotal">$110.00</td>
-                                    
+
+                                        <td class="remove_wishlist" product-id="{{$item->id}}"><i class="fa fa-times"></i></td>
+
                                     </tr>
-                                @endforeach --}}
-                                
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
                 </form>
+                {{$products->links()}}
+                @else
+                    <div class="alert alert-danger" role="alert">
+                       Bạn chưa thêm sản phẩm yêu thích nào!
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -80,4 +84,30 @@ Sản phẩm yêu thích
 
 
 
+@endsection
+
+@section('js')
+    <script>
+        $(document).on('click','.remove_wishlist',function(){
+                @if(Auth::check())
+
+                    product_id = $(this).attr('product-id');
+                    $.ajax({
+                        type:'POST',
+                        url:`{{route('remove_wishlist')}}`,
+                        data:{
+                            product_id : product_id,
+                            user_id :  `{{Auth::user()->id}}`,
+                            _token : `{{csrf_token()}}`,
+                        },
+                        success:function(data){
+                            if (!data.errors) {
+                                window.location.reload();
+                            }
+                        }
+                    });
+
+                @endif
+            })
+    </script>
 @endsection

@@ -35,7 +35,7 @@
                     <div class="contact-info-sidebar">
                         <ul>
                             <li class="{{Request::segment(2) == 'doi-diem' ? 'active' : ''}}"><a href="{{route('get_reward')}}">Đổi điểm</a></li>
-                            <li><a href="sanphamyeuthich.php">Sản phẩm yêu thích</a></li>
+
                             <li class="{{Request::segment(2) == 'thong-tin' ? 'active' : ''}}"><a href="{{route('info_account')}}">Thông tin tài
                                     khoản</a></li>
                             @if (Auth::check() && Auth::user()->role == 1)
@@ -79,15 +79,15 @@
                                         <td>{{$item->point}}</td>
                                         <td><a style="color:white;padding:3px" class="btn-{{$item->status == 1 ? "success" : 'warning'}}">{{$item->status == 1 ? "Chấp nhận" : 'Chờ duyệt'}}</a></td>
                                         </tr>
-                                    @endforeach        
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                         {{$history_reward->links()}}
-                    </div>  
-                     
+                    </div>
+
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -97,6 +97,6 @@
 @section('js')
 <script src="{{ asset('assets/plugins/sweet-alert/sweetalert.min.js')}}"></script>
 <script>
-  
+
 </script>
 @endsection

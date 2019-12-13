@@ -77,7 +77,7 @@ Route::group(['namespace' => 'Client'], function () {
     Route::post('load_more_comment', 'ProductController@load_more_comment')->name('load_more_comment');
     Route::post('send_comment', 'ProductController@send_comment')->name('send_comment');
     Route::post('add_wishlist', 'HomeController@add_wishlist')->name('add_wishlist');
-    // Route::get('thanh-toan', 'CheckoutController@index')->name('checkout');
+    Route::post('remove_wishlist', 'HomeController@remove_wishlist')->name('remove_wishlist');
 
     // trang lien he fake
     Route::get('lien-he', 'PageController@contact')->name('contact');

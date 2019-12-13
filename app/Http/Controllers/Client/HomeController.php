@@ -50,12 +50,17 @@ class HomeController extends Controller
     }
 
     public function wishlist(){
-        $user = User::find(Auth::user()->id);
-        $user->load('products');
-        foreach ($user->products as $value) {
-            // dd($value->id);
-        }
-        // dd($products);
-        return view('client.wishlist');
+        $products = Wishlist::where('user_id',Auth::user()->id)->with(['product' => function($query){
+            return $query->with('galleries', 'variants');
+        }])->paginate(5);
+        return view('client.wishlist',compact('products'));
+    }
+
+    public function remove_wishlist(Request $request){
+        Wishlist::where(['user_id' => $request->user_id, 'product_id' => $request->product_id])->delete();
+        return response([
+                'errors' => false,
+                'messages' => 'Xóa thành công',
+        ]);
     }
 }

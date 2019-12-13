@@ -46,7 +46,7 @@ $(function () {
             $(this).parent('form').submit();
             // setTimeout(() => {
             //     window.location.reload();
-                
+
             // }, 1000);
         }
     });
