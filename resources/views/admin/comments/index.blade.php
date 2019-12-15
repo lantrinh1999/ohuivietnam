@@ -64,6 +64,7 @@ Danh sách
                         <tbody>
                             @if (!empty($comments))
                             @foreach ($comments as $item)
+                            {{-- {{dd($item)}} --}}
                                 <tr>
                                     <td><input type="checkbox" class="checkbox" value="{{$item->id}}" name="checkbox"></td>
                                     <td>{{!empty($item->user->account->name) ? $item->user->account->name :  $item->user->email}}
@@ -85,7 +86,7 @@ Danh sách
                                     <td>{{$item->content}}</td>
 
                                     <td>
-                                        <a href="{{route('product_detail',['slug' => $item->slug])}}">{{$item->product->name}}</a>
+                                        <a href="{{route('product_detail',['slug' => $item->product->slug])}}">{{$item->product->name}}</a>
                                     </td>
                                     <td>{{$item->created_at}}</td>
                                 </tr>

@@ -29,17 +29,17 @@ Chi tiết
                 Tổng tiền: {{ohui_number_format($order->total)}}<br>
                 Trạng thái thanh toán : {{$order->payment_status == 1 ? 'Chưa thanh toán' : 'Đã thanh toán'}}<br>
                 Phương thức thanh toán : {{$order->payment_method == 1 ? 'Thanh toán online' : 'Thanh toán sau khi nhận hàng'}}<br>
-                Trạng thái : 
+                Trạng thái :
                 @if ($order->status == 4)
                     Đơn hàng thành công
                 @else
-                    <select name="status" id="status" class="form-control" style="width:30%">
+                    <select name="status" id="status" class="form-control" style="width:150px">
                         @foreach ($status as $item)
                         <option {{$item->id == $order->status ? 'selected' : ''}} value="{{$item->id}}">{{$item->name}}</option>
                         @endforeach
                     </select><br>
                 @endif
-                
+
             </address>
         </div>
         <!-- /.col -->
@@ -51,7 +51,7 @@ Chi tiết
                 Địa chỉ: {{$order->account->address}}<br>
             </address>
         </div>
-       
+
         <!-- /.col -->
     </div>
     <!-- /.row -->
@@ -71,9 +71,9 @@ Chi tiết
                 </thead>
                 <tbody>
                     @if (!empty($order->order_details))
-                    @php $arr = json_decode($order->order_details,true); @endphp 
+                    @php $arr = json_decode($order->order_details,true); @endphp
                         @foreach ($order->order_details as $item)
-                           
+
                             <tr>
                                 <td><a target="_blank" href="{{route('product_detail',['slug' => $item->product->slug])}}"> {{$item->product->name}}</a></td>
                                 @if ($item->product->is_simple == 1)
@@ -88,7 +88,7 @@ Chi tiết
                                         });
                                         $price_current = array_values($price_current);
                                     @endphp
-                                   
+
                                     <td>{{!empty($price_current[0]['sale_price']) ? ohui_number_format($price_current[0]['sale_price']) : ohui_number_format($price_current[0]['regular_price'])}}
                                     </td>
                                 @endif
@@ -97,7 +97,7 @@ Chi tiết
                                 <td>{{ohui_number_format($item->amount)}}</td>
                             </tr>
                         @endforeach
-                    @endif                
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -108,7 +108,7 @@ Chi tiết
     <div class="row">
         <!-- accepted payments column -->
         <div class="col-xs-6">
-            
+
         </div>
         <!-- /.col -->
         <div class="col-xs-6">
@@ -118,7 +118,7 @@ Chi tiết
                 <table class="table">
                     <tbody>
                         @if (!empty($order->discount_id) || !empty($order->voucher))
-                            
+
                         @endif
                         <tr>
                             <th style="width:50%">Giá trị đơn hàng:</th>
@@ -130,14 +130,14 @@ Chi tiết
                             @if (!empty($order->discount_id) && !empty($order->discount))
                                 <th>Giảm giá</th>
                                 @if ($order->discount->type == 'total')
-                                    <td>{{ '-'.ohui_number_format($order->discount->value) }}</td>    
+                                    <td>{{ '-'.ohui_number_format($order->discount->value) }}</td>
                                 @elseif($order->discount->type == 'percent')
                                     <td>{{ '-'.ohui_number_format(array_sum(array_column($arr,'amount')) / 100 * $order->discount->value) }}</td>
                                 @endif
                             @elseif(!empty($order->voucher_id) && !empty($order->voucher))
                                 <th>Giảm giá</th>
                                 @if ($order->discount->type == 'total')
-                                    <td>{{ '-'.ohui_number_format($order->discount->value) }}</td>    
+                                    <td>{{ '-'.ohui_number_format($order->discount->value) }}</td>
                                 @elseif($order->discount->type == 'percent')
                                     <td>{{ '-'.ohui_number_format(array_sum(array_column($arr,'amount')) / 100 * $order->discount->value) }}</td>
                                 @endif
@@ -146,7 +146,7 @@ Chi tiết
                         <tr>
                             <th>Thành tiền: </th>
                             <td>{{ohui_number_format($order->total)}}</td>
-                        </tr> 
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -191,18 +191,18 @@ Chi tiết
                         window.location.reload();
                     }
                     });
-                    
+
             });
         }else{
             $(this).val(`{{$order->id}}`);
             return false;
         }
     });
-        
-    
+
+
     $(function () {
         $('.select2').select2();
     })
-    
+
 </script>
 @endsection

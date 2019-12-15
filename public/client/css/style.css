@@ -7602,7 +7602,7 @@ a.default-btn {
 
 .blog-wrap-2 {
 	box-shadow: 0 3px 5px rgba(85, 85, 85, 0.2);
-	height: 430px;
+	/* height: 430px; */
 }
 
 .blog-wrap-2 .blog-img-2 {
