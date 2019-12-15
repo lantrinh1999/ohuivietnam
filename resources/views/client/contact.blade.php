@@ -1,18 +1,18 @@
 @extends('client.layout.master')
 @section('page_title')
-    liên hệ
+    Liên hệ
 @endsection
 @section('content')
 
-
+{{-- {{dd('aaa')}} --}}
 <div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
     <div class="container">
         <div class="breadcrumb-content text-center">
             <ul>
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="{{route('/')}}">Trang chủ</a>
                 </li>
-                <li class="active">Contact us</li>
+                <li class="active">Liên hệ</li>
             </ul>
         </div>
     </div>
@@ -75,13 +75,13 @@
                                 <input class="form-control" name="name" placeholder="Tên*" type="text">
                             </div>
                             <div class="col-lg-6 form-group">
-                                <input name="email" class="form-control" placeholder="Email*" type="email">
+                            <input name="email" class="form-control" {{ Auth::check() ? 'readonly' : ''}} value="{{ Auth::check() ? Auth::user()->email : ''}}" placeholder="Email*" type="email">
                             </div>
                             <div class="col-lg-12 form-group">
-                                <input name="subject" class="form-control" placeholder="Tiêu đề*" type="text">
+                                <input name="title" class="form-control" placeholder="Tiêu đề*" type="text">
                             </div>
                             <div class="col-lg-12 form-group">
-                                <textarea style="height: 130px !important" name="message" class="form-control" placeholder="Nội dung*"></textarea>
+                                <textarea style="height: 130px !important" name="content" class="form-control" placeholder="Nội dung*"></textarea>
                                 <button class="submit" type="submit">Gửi</button>
                             </div>
                         </div>
@@ -93,4 +93,69 @@
     </div>
 </div>
 
+@endsection
+@section('js')
+    <script>
+    $(document).on('submit','#contact-form_',function(e) {
+		e.preventDefault();
+		
+		html = '';
+		var formData = new FormData($('form#contact-form_')[0]);
+		formData.set('_token',`{{csrf_token()}}`);
+		$.ajax({
+		url : `{{route('submitContact')}}`,
+		processData: false,
+		contentType: false,
+		method: 'POST',
+        beforeSend : function () {
+            $('#roller_load').css('display','block');
+            $('.ohui_container').css('opacity','0.5');
+            $('#roller_load').css('opacity','1');
+        },
+		data: formData,
+			success:function(data){ 
+                console.log(data);
+                $('.ohui_container').css('opacity','1');
+                $('#roller_load').css('display','none');
+				if (data.errors) {	
+                        if (typeof data.messages.name != 'undefined') {
+					        html += `<li>${data.messages.name[0]}</li>`;   
+                        }
+                        if (typeof data.messages.email != 'undefined') {
+                            html += `<li>${data.messages.email[0]}</li>`;
+                        }
+                        if (typeof data.messages.title != 'undefined') {
+                            html += `<li>${data.messages.title[0]}</li>`;
+                        }
+                        if (typeof data.messages.content != 'undefined') {
+                            html += `<li>${data.messages.content[0]}</li>`;
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            html:
+                                `<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${html}</ul>`,      
+                            focusConfirm: false,
+                            confirmButtonText:
+                                ' Ok!',	
+                        })   
+                 
+				}else{
+                    Swal.fire({
+                        icon: 'success',
+                        html:
+                            `<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${data.messages[0]}</ul>`,      
+                        focusConfirm: false,
+                        confirmButtonText:
+                            ' Ok!',	
+                        
+                    }).then((result) => {
+                            window.location.reload();
+                        })
+                    
+				}
+			},
+		});
+	})
+    </script>
 @endsection

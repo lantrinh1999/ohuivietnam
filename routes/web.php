@@ -81,6 +81,7 @@ Route::group(['namespace' => 'Client'], function () {
 
     // trang lien he fake
     Route::get('lien-he', 'PageController@contact')->name('contact');
+    Route::post('submitContact','PageController@submitContact')->name('submitContact');
 
 });
 
