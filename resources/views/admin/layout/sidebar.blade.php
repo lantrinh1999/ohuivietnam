@@ -169,6 +169,9 @@
                     <li class="{{ activeNav('options','theme_option') }}">
                         <a href="{{ route('admin.options.index') }}"><i class="fa  fa-circle-o"></i>Thiết lập chung</a>
                     </li>
+                    <li class="{{ activeNav('options','setting_footer') }}">
+                        <a href="{{ route('admin.options.setting_footer') }}"><i class="fa  fa-circle-o"></i>Thiết lập chân trang</a>
+                    </li>
                     <li class="{{ activeNav('options','menu') }}">
                         <a href="{{ route('admin.options.menu') }}"><i class="fa  fa-circle-o"></i>Thiết lập menu</a>
                     </li>

@@ -135,6 +135,7 @@ Thiết lập chung
                             <li><a href="#tab_2" data-toggle="tab">Slideshow</a></li>
                             <li><a href="#tab_3" data-toggle="tab">Điểm thưởng</a></li>
                             <li><a href="#intro_service" data-toggle="tab">Giới thiệu dịch vụ</a></li>
+                            <li><a href="#email_admin" data-toggle="tab">Email quản trị viên</a></li>
 
                         </ul>
                         <div class="tab-content">
@@ -382,6 +383,26 @@ Thiết lập chung
                                         </div>
                                     </div>
 
+                                </form>
+                            </div>
+
+                            <div class="tab-pane" id="email_admin">
+                                <form id="form-email_admin">
+                                    
+                                    <div class="row">
+                                        <div class="form-group col-sm-4">
+                                            <label for="">Email quản trị viên</label>
+                                        <input type="email" class="form-control email_admin" name="email_admin" value="{{ !empty(get_option('email_admin')) ? get_option('email_admin') : '' }}" id="email_admin" placeholder="Email">
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-success" type="submit">Lưu</button>
+                                        </div>
+                                    </div>
+                            
                                 </form>
                             </div>
                             <!-- /.tab-pane -->
@@ -736,7 +757,31 @@ Thiết lập chung
 
 <!------ end intro service -------->
 
+<script>
+    $('body').on('submit', '#form-email_admin', function (e) {
+        e.preventDefault();
+        var data = new FormData($('form#form-email_admin')[0]);
+        $.ajax({
+            url: "{{ route('admin.options.saveEmailAdmin') }}",
+            method: 'post',
+            processData: false,
+            contentType: false,
+            data: data,
+        }).done(result => {
+           if (!result.errors) {
+                swal({
+                    title: "Thông báo",
+                    text: "Thêm logo thành công!",
+                    icon: "success",
+                    button: "OK",
+                }).then((result) => {
+                    window.location.reload();
+                });
+           }
+        })
+    })
 
+</script>
 
 
 @endsection

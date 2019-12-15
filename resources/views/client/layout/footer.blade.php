@@ -93,11 +93,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="info-footer">
-                <h3>OHUIVIETNAM</h3>
-                <p>Copyright © 2019 ohuivietnam.gq</p>
-                <p>Hotline: <a class="text-is-phone-number">0979055137 </a>| Email: ohuivietnam@gmail.com | Facebook:
-                    https://www.facebook.com</p>
-                <p>109 Trường Chinh – Thanh Xuân – Hà Nội</p>
+            @php echo !empty(get_option('setting_footer')) ?  get_option('setting_footer') : '' @endphp
             </div>
         </div>
     </div>

@@ -300,4 +300,22 @@ class OptionController extends Controller
 
     }
 
+    public function saveEmailAdmin(Request $request){
+        $updateEmailAdmin = Option::where('key','email_admin')->update([
+            'value' => $request->email_admin,
+        ]);
+        return response([
+            'errors' => false,
+        ]);
+    }
+
+    public function setting_footer(Request $request){
+        if ($request->isMethod('post')) {
+            $updateEmailAdmin = Option::where('key','setting_footer')->update([
+                'value' => $request->setting_footer,
+            ]);
+            return redirect()->back()->with('success','Thành công');
+        }
+        return view('admin.options.setting_footer');
+    }
 }

@@ -311,6 +311,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkIsAdmin'], 'namespace'
         Route::post('savePoint', 'OptionController@savePoint')->name('savePoint');
         Route::post('saveMenu', 'OptionController@saveMenu')->name('saveMenu');
         Route::post('saveService', 'OptionController@saveService')->name('saveService');
+        Route::post('saveEmailAdmin','OptionController@saveEmailAdmin')->name('saveEmailAdmin');
+
+        Route::any('setting_footer','OptionController@setting_footer')->name('setting_footer');
     });
 
 });
