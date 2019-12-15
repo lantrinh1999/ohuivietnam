@@ -234,4 +234,70 @@ class OptionController extends Controller
         return view('admin.options.page_contact');
     }
 
+    public function saveContact(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'map' => [
+                    'required',
+                ],
+                'phone' => [
+                    'required',
+                    'regex:/((09|03|07|08|05|04|06)+([0-9]{8,9})\b)/',
+
+                ],
+                'email' => [
+                    'required',
+                    'email',
+                ],
+                'address' => [
+                    'required',
+                ],
+                // 'facebook' => [
+                //     'required',
+                // ],
+            ],
+            [
+                'map.required' => 'Mời nhập đầy đủ thông tin.',
+                'phone.required' => 'Mời nhập đầy đủ thông tin.',
+                'email.required' => 'Mời nhập đầy đủ thông tin.',
+                'email.email' => 'Mời nhập email.',
+                'address.required' => 'Mời nhập đầy đủ thông tin.',
+                'facebook.required' => 'Mời nhập đầy đủ thông tin.',
+                'phone.regex' => 'Sai định dạng số điện thoại',
+            ],
+        );
+
+        if ($validator->fails()) {
+            $errors = [
+                'errors' => true,
+                'messages' => $validator->errors(),
+                'data' => $request->all(),
+            ];
+            return response($errors);
+        }
+
+        $data['phone'] = $request->phone;
+        $data['map'] = $request->map;
+        $data['address'] = $request->address;
+        $data['email'] = $request->email;
+        // $data['facebook'] = $request->facebook;
+
+        $contact = Option::where('key', '=', 'contact')->first();
+        if (empty($contact->key)) {
+            $contact = new Option();
+        }
+        $contact->name = 'contact';
+        $contact->key = 'contact';
+        $contact->value = json_encode($data);
+        $contact->save();
+        $errors = [
+            'errors' => false,
+            'data' => $data,
+        ];
+        return response()->json($data);
+
+    }
+
 }

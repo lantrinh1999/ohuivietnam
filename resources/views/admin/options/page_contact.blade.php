@@ -15,6 +15,10 @@ Thiết lập liên hệ
         height: auto;
         height: 182px;
     }
+    .error {
+        color: red;
+        font-weight: bold;
+    }
 
     .cke_contents {
         min-height: 100px !important;
@@ -42,7 +46,13 @@ Thiết lập liên hệ
 @endsection
 
 @section('content')
+@php
+    $contact  = get_option('contact');
+    if(!empty($contact)){
+        $contact = json_decode($contact);
+    }
 
+@endphp
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title"> @yield('title') </h3>
@@ -58,27 +68,30 @@ Thiết lập liên hệ
     <!-- ********** -->
     <div class="box-body">
 
-
-        <form id="form-contact">
+        <form id="form-contact" method="post" action="{{ route('admin.options.saveContact') }}">
             <div class="">
                 <div class="form-group col-md-12">
                     <label for="">Bản đồ</label>
-                    <input type="text" class="form-control map" name="map" id="map">
+                    <div class="error error_map"></div>
+                    <input value="{{ !empty($contact->map) ? $contact->map : '' }}" type="text" class="form-control map" name="map" id="map">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="">Số điện thoại</label>
-                    <input type="text" class="form-control map" name="map" id="map">
+                    <div class="error error_phone"></div>
+                    <input value="{{ !empty($contact->phone) ? $contact->phone : '' }}" type="text" class="form-control phone" name="phone" id="phone">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="">Email</label>
-                    <input type="text" class="form-control email" name="email" id="email">
+                    <div class="error error_email"></div>
+                    <input value="{{ !empty($contact->email) ? $contact->email : '' }}" type="text" class="form-control email" name="email" id="email">
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                     <label for="">Địa chỉ</label>
-                    <input type="text" class="form-control address" name="address" id="address">
+                    <div class="error error_address"></div>
+                    <input value="{{ !empty($contact->address) ? $contact->address : '' }}" type="text" class="form-control address" name="address" id="address">
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-success">Lưu</button>
+                <div class="form-group  col-md-12">
+                    <button type="submit" class="btn btn-success">Lưu</button>
                 </div>
             </div>
         </form>
@@ -97,100 +110,43 @@ Thiết lập liên hệ
 <script src="{{ asset('assets/plugins/jquery.nestable.js') }}"></script>
 <script>
     $(function () {
-        //$('body').find('.genmenu').select2({});
-
-        $('.dd').nestable({
-            maxDepth: 3,
-            group: 2
-        });
-    })
-
-</script>
-<script>
-    function buildItem(title, slug) {
-        var html = `<li class="dd-item dd3-item" data-slug="${slug}" data-title="${title}">
-                        <div class="dd-handle dd3-handle"></div>
-                        <div class="dd3-content">${title.length > 50 ? title.substr(0, 50) + '...' : title}</div>
-                        <div class="pull-right2">
-                            <span style="cursor: pointer" class="btn_edit_element">
-                                <button class="btn btn-xs btn-warning"><i class="fa fa-pencil"></i></button>
-                            </span>
-                            <span style="cursor: pointer" class="btn_remove_element">
-                                <button class="btn btn-xs btn-danger"><i class="fa fa-close"></i></button>
-
-                            </span>
-                        </div>
-                    </li>`;
-        return html;
-    }
-    $(function () {
-        $('body').on('click', '.btn_add_element', function (e) {
+        $('body').on('submit', '#form-contact', function (e) {
             e.preventDefault();
-            let title = $('#title').val();
-            let slug = $('#slug').val();
-            title = $.trim(title);
-            slug = $.trim(slug);
-            console.log(title.length);
-            console.log(slug);
-            if (title.length != 0 && slug.length != 0) {
-                $('.dd-list:first-child').append(buildItem(title, slug));
-                $('.genmenu').prop('selectedIndex', 0);
-                $('body').find('form#form-menu')[0].reset();
-                $('body').find('input[name=slug]').val('');
-                $('body').find('input[name=title]').val('');
-            } else {
-                alert('Mời nhập hoặc chọn menu!');
-            }
-        })
-        $('body').on('click', '.btn_remove_element', function (e) {
-            e.preventDefault();
-            let conf = confirm('Bạn có chắc chắn xoá menu này?');
-            if (conf == true) {
-                $(this).closest('.dd3-item').remove();
-            }
-        })
-    })
+            var formData = new FormData($('form#form-contact')[0]);
+            $.ajax({
+                url: "{{ route('admin.options.saveContact') }}",
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+            }).done(
+                result => {
+                    if (result.errors == true) {
 
-</script>
-<script>
-    $(function () {
-        $('body').on('change', '.genmenu', function (e) {
-            title = $(this).find('option:selected').data('title');
-            slug = $(this).find('option:selected').data('slug');
-            $('input#title').val(title);
-            $('input#slug').val(slug);
-        })
-    })
-
-</script>
-<script>
-    $(function () {
-        $('body').on('click', '#save-menu', function () {
-            var menu = $('.dd').nestable('serialize');
-            if (typeof menu == 'object' && menu.length > 0) {
-                var menu_jt = JSON.stringify(menu);
-                console.log(menu);
-                $.ajax({
-                    url: "{{ route('admin.options.saveMenu') }}",
-                    method: 'post',
-                    type: 'json',
-                    dataType: 'json',
-                    data: {
-                        menu: menu_jt,
-                    },
-                }).done(result => {
-                    console.log(result);
-                    if (result.errors == false) {
-                        alert('Thêm menu thành công!');
+                        $('body').find(".error").html(' ');
+                        if (typeof result.messages.map == 'object') {
+                            $('body').find(".error_map").html(result.messages.map);
+                        }
+                        if (typeof result.messages.phone == 'object') {
+                            $('body').find(".error_phone").html(result.messages.phone);
+                        }
+                        if (typeof result.messages.email == 'object') {
+                            $('body').find(".error_email").html(result.messages.email);
+                        }
+                        if (typeof result.messages.address == 'object') {
+                            $('body').find(".error_address").html(result.messages.address);
+                        }
+                        if (typeof result.messages.facebook == 'object') {
+                            $('body').find(".error_facebook").html(result.messages.facebook);
+                        }
+                    } else {
+                        $('body').find(".error").html(' ');
+                        alert('Lưu thành công');
                     }
-                })
-            } else {
-                alert('Mời chọn menu');
-            }
-
+                }
+            )
         })
     })
 
 </script>
-
 @endsection
