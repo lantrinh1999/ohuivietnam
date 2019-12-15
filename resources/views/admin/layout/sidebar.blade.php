@@ -149,6 +149,11 @@
                     <i class="fa fa-hand-peace-o"></i><span>Đánh giá sản phẩm</span>
                 </a>
             </li>
+            <li class="{{ activeNav('contacts') }}">
+                <a href="{{ route('admin.contacts.index') }}">
+                    <i class="fa fa-address-book"></i><span>Liên hệ</span>
+                </a>
+            </li>
 
 
 
