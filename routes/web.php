@@ -288,6 +288,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkIsAdmin'], 'namespace'
     Route::group(['prefix' => 'options', 'as' => 'options.'], function () {
         Route::get('theme_option', 'OptionController@index')->name('index');
         Route::get('menu', 'OptionController@menu')->name('menu');
+        Route::get('contact', 'OptionController@contact')->name('contact');
+
+        Route::post('saveContact', 'OptionController@saveContact')->name('saveContact');
         Route::post('saveLogo', 'OptionController@saveLogo')->name('saveLogo');
         Route::post('saveSlide', 'OptionController@saveSlide')->name('saveSlide');
         Route::post('savePoint', 'OptionController@savePoint')->name('savePoint');

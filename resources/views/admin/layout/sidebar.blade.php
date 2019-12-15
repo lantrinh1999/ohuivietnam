@@ -167,6 +167,9 @@
                     <li class="{{ activeNav('options','menu') }}">
                         <a href="{{ route('admin.options.menu') }}"><i class="fa  fa-circle-o"></i>Thiết lập menu</a>
                     </li>
+                    <li class="{{ activeNav('options','contact') }}">
+                        <a href="{{ route('admin.options.contact') }}"><i class="fa  fa-circle-o"></i>Thiết lập trang Liên hệ</a>
+                    </li>
                 </ul>
             </li>
 

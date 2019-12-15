@@ -69,20 +69,20 @@
                     <div class="contact-title mb-30">
                         <h2>Liên hệ</h2>
                     </div>
-                    <form class="contact-form-style" id="contact-form" action="assets/php/mail.php" method="post">
+                    <form class="contact-form-style" id="contact-form_" action="" method="post">
                         <div class="row">
                             <div class="col-lg-6 form-group">
-                                <input class="form-control" name="name" placeholder="Name*" type="text">
+                                <input class="form-control" name="name" placeholder="Tên*" type="text">
                             </div>
                             <div class="col-lg-6 form-group">
-                                <input name="email" placeholder="Email*" type="email">
+                                <input name="email" class="form-control" placeholder="Email*" type="email">
                             </div>
-                            <div class="col-lg-12">
-                                <input name="subject" placeholder="Subject*" type="text">
+                            <div class="col-lg-12 form-group">
+                                <input name="subject" class="form-control" placeholder="Tiêu đề*" type="text">
                             </div>
-                            <div class="col-lg-12">
-                                <textarea name="message" placeholder="Your Massege*"></textarea>
-                                <button class="submit" type="submit">SEND</button>
+                            <div class="col-lg-12 form-group">
+                                <textarea style="height: 130px !important" name="message" class="form-control" placeholder="Nội dung*"></textarea>
+                                <button class="submit" type="submit">Gửi</button>
                             </div>
                         </div>
                     </form>

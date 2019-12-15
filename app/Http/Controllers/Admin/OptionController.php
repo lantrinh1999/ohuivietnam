@@ -229,4 +229,9 @@ class OptionController extends Controller
 
     }
 
+    public function contact()
+    {
+        return view('admin.options.page_contact');
+    }
+
 }
