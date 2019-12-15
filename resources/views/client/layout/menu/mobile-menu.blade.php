@@ -1,3 +1,12 @@
+@php
+$menus = get_option('menu');
+if(!empty($menus)){
+$menus = json_decode($menus);
+} else {
+$menus = '';
+}
+@endphp
+
 <div class="mobile-menu">
     <nav id="mobile-menu-active">
         <ul class="menu-overflow">
