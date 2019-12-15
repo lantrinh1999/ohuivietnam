@@ -13,7 +13,7 @@
                 <div class="col-xl-6 col-lg-6 d-none d-lg-block">
                     <div class="main-menu">
                         @include('client.layout.menu.main-menu')
-                    </div>
+                    </div>g
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 col-8">
                     <div class="header-right-wrap">
