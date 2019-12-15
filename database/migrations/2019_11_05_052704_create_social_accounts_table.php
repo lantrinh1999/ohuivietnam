@@ -13,7 +13,8 @@ class CreateSocialAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('social_accounts', function (Blueprint $table) {
+        if (DB::table('social_accounts')->count() > 0) {
+           Schema::create('social_accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->string('provider_user_id');
@@ -23,7 +24,9 @@ class CreateSocialAccountsTable extends Migration
                 ->references('id')->on('users')
                 ->onDelete('cascade');
 
-        });
+            });
+        }
+        
     }
 
     /**

@@ -1,6 +1,6 @@
 @extends('client.layout.master')
 @section('page_title')
-Shop
+Cảm ơn
 @endsection
 @section('content')
 <style>
