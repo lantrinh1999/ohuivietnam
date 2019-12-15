@@ -47,6 +47,7 @@ class OrderController extends Controller
                'user_id' => $user->id,
                'point' => $point,
                'action' => 'Hoàn thành đơn hàng mã số '.$order_get->code,
+               'payment_status' => 1,
                'status' => 1,
                'created_at' => date('Y/m/d H:i:s'),
            ]);

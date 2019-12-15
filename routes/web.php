@@ -176,6 +176,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkIsAdmin'], 'namespace'
     });
 
     /*
+     * Contacts
+     */
+    Route::group(['prefix' => 'contacts', 'as' => 'contacts.'], function () {
+        Route::any('getData', 'ContactController@getData')->name('data');
+
+        Route::get('/', 'ContactController@index')->name('index');
+        Route::post('saveEdit','ContactController@saveEdit')->name('saveEdit');
+        Route::post('delete', 'ContactController@delete')->name('delete');
+        Route::post('deleteMulti', 'ContactController@deleteMulti')->name('deleteMulti');
+
+    });
+
+
+    /*
      * page
      */
     Route::group(['prefix' => 'pages', 'as' => 'pages.'], function () {

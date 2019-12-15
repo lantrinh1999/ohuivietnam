@@ -44,7 +44,8 @@ class PageController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'title' => $request->title,
-                'content' => $request->email,
+                'content' => $request->content,
+                'created_at' => -1,
             ]);
             return response(
                 [
