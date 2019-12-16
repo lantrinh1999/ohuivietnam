@@ -17,7 +17,9 @@ Thiết lập chung
         border: 1px solid #d2d6de;
         position: relative;
     }
-
+    #reportrange {
+        width: 290px !important;
+    }
     .nav-tabs-custom>.nav-tabs>li.active {
         border-top-color: #ff0000;
         font-weight: bold !important;
@@ -107,6 +109,7 @@ Thiết lập chung
         border-radius: 4px;
         display: none;
     }
+
     .img-icon:hover .btn-remove-icon {
         display: block;
     }
@@ -172,7 +175,7 @@ Thiết lập chung
                                         $slides = get_option('slide');
                                         $count_slide = 0;
                                         if(!empty($slide)){
-                                            $slides = json_decode($slides);
+                                        $slides = json_decode($slides);
                                         }
                                         @endphp
                                         @if (!empty($slides) && is_object($slides))
@@ -378,7 +381,7 @@ Thiết lập chung
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                             <button class="btn btn-success" type="submit">Lưu</button>
+                                            <button class="btn btn-success" type="submit">Lưu</button>
                                         </div>
                                     </div>
 
@@ -694,44 +697,46 @@ Thiết lập chung
 
 </script>
 <script>
-    $(function(){
-        $('body').on('click', '.btn-remove-icon', function(){
+    $(function () {
+        $('body').on('click', '.btn-remove-icon', function () {
             $(this).parents('.box-icon').html('<i class="choose-icon glyphicon glyphicon-plus"></i>');
         })
     })
+
 </script>
 <script>
-    $(function(){
-        $('body').on('submit', '#form-intro_service', function(e){
+    $(function () {
+        $('body').on('submit', '#form-intro_service', function (e) {
             e.preventDefault();
             var formData = new FormData($('form#form-intro_service')[0]);
             $.ajax({
-            url: "{{ route('admin.options.saveService') }}",
-            method: 'post',
-            processData: false,
-            contentType: false,
-            data: formData,
-        }).done(result => {
-            console.log(result);
-            if (result.errors == true) {
-                console.log(result.messages.logo);
-                swal({
-                    title: "Thông báo",
-                    text: "Nhập đầy đủ các mục!",
-                    icon: "warning",
-                });
-            } else {
-                swal({
-                    title: "Thông báo",
-                    text: "Thành công!",
-                    icon: "success",
-                    button: "OK",
-                });
-            }
-        });
+                url: "{{ route('admin.options.saveService') }}",
+                method: 'post',
+                processData: false,
+                contentType: false,
+                data: formData,
+            }).done(result => {
+                console.log(result);
+                if (result.errors == true) {
+                    console.log(result.messages.logo);
+                    swal({
+                        title: "Thông báo",
+                        text: "Nhập đầy đủ các mục!",
+                        icon: "warning",
+                    });
+                } else {
+                    swal({
+                        title: "Thông báo",
+                        text: "Thành công!",
+                        icon: "success",
+                        button: "OK",
+                    });
+                }
+            });
 
         })
     })
+
 </script>
 
 <!------ end intro service -------->

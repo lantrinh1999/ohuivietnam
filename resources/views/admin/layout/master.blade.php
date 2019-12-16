@@ -15,13 +15,13 @@
         <link rel="stylesheet" href="{{ asset('assets/css/ionicons.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
         {{-- <link rel="stylesheet" href="{{ asset('assets/css/iCheck.css') }}"> --}}
-
+        <link rel="stylesheet" href="{{ asset('assets/css/merge.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/AdminLTE.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/_all-skins.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/skin-linh.css') }}">
         {{-- <link rel="stylesheet" href="{{ asset('assets/css/custom_layout_admin.css') }}"> --}}
         <link rel="stylesheet" href="{{ asset('assets/plugins/sweet-alert/sweetalert.css')}}">
-        <script src="{{ asset('assets/plugins/jquery.min.js') }}"></script>
+
         <style>
             tr:hover .div-action {
                 display: block;
@@ -129,7 +129,7 @@
             </footer>
         </div>
 
-
+<script src="{{ asset('assets/plugins/jquery.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/jquery.slimscroll.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/fastclick.js') }}"></script>
@@ -138,6 +138,9 @@
         <script src="{{ asset('assets/plugins/select2.full.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/adminlte.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/sweet-alert/sweetalert.min.js')}}"></script>
+        <script scr="https://adminlte.io/themes/AdminLTE/bower_components/moment/min/moment.min.js"></script>
+<script scr="https://adminlte.io/themes/AdminLTE/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script scr="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
         <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}"></script>
         <script src="{{ asset('assets/js/script.js') }}"></script>
         <script src="{{ asset('assets/plugins/repeater.js') }}"></script>
