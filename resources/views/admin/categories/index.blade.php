@@ -30,7 +30,7 @@ Danh sách
 <div class="box">
     <div class="box-header with-border">
         <div style="margin-right: 30px !important;" class="pull-left ml-4">
-            <a class="btn btn-sm btn-primary btn-flat" href="{{ route('admin.categories.add') }}">Thêm sản phẩm</a>
+            <a class="btn btn-sm btn-primary btn-flat" href="{{ route('admin.categories.add') }}">Thêm danh mục</a>
         </div>
         <form class="form-action" id="form-action">
             <div style="margin-right: 5px !important;" class="pull-left">

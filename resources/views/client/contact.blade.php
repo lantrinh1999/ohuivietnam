@@ -3,7 +3,24 @@
     Liên hệ
 @endsection
 @section('content')
+<style>
+    #map iframe {
+        width: 100% !important;
+    }
+    .contact-info-wrap {
+        height: 100%;
+    }
+</style>
+@php
+    $contact  = get_option('contact');
+    if(!empty($contact))
+    {
+        $contact = json_decode($contact);
+    }
 
+
+
+@endphp
 {{-- {{dd('aaa')}} --}}
 <div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
     <div class="container">
@@ -20,7 +37,13 @@
 <div class="contact-area pt-100 pb-100">
     <div class="container">
         <div class="contact-map mb-10">
-            <div id="map"></div>
+            <div id="map">
+                @if (!empty($contact->map))
+                    @php
+                        echo $contact->map
+                    @endphp
+                @endif
+            </div>
         </div>
         <div class="custom-row-2">
             <div class="col-lg-4 col-md-5">
@@ -30,8 +53,9 @@
                             <i class="fa fa-phone"></i>
                         </div>
                         <div class="contact-info-dec">
-                            <p>+012 345 678 102</p>
-                            <p>+012 345 678 102</p>
+                            <p>Số điện thoại:</p>
+                            <p>{{ !empty($contact->phone) ? $contact->phone : '' }}</p>
+
                         </div>
                     </div>
                     <div class="single-contact-info">
@@ -39,8 +63,9 @@
                             <i class="fa fa-globe"></i>
                         </div>
                         <div class="contact-info-dec">
-                            <p><a href="#">urname@email.com</a></p>
-                            <p><a href="#">urwebsitenaem.com</a></p>
+                            <p>Email:</p>
+                            <p><a href="#">{{ !empty($contact->email) ? $contact->email : '' }}</a></p>
+                            {{-- <p><a href="#">urwebsitenaem.com</a></p> --}}
                         </div>
                     </div>
                     <div class="single-contact-info">
@@ -48,11 +73,13 @@
                             <i class="fa fa-map-marker"></i>
                         </div>
                         <div class="contact-info-dec">
-                            <p>Address goes here, </p>
-                            <p>street, Crossroad 123.</p>
+                            <p>Địa chỉ:</p>
+                            <p>
+                                {{ !empty($contact->address) ? $contact->address : '' }}
+                            </p>
                         </div>
                     </div>
-                    <div class="contact-social text-center">
+                    {{-- <div class="contact-social text-center">
                         <h3>Follow Us</h3>
                         <ul>
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -61,7 +88,7 @@
                             <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="col-lg-8 col-md-7">
@@ -98,7 +125,7 @@
     <script>
     $(document).on('submit','#contact-form_',function(e) {
 		e.preventDefault();
-		
+
 		html = '';
 		var formData = new FormData($('form#contact-form_')[0]);
 		formData.set('_token',`{{csrf_token()}}`);
@@ -113,13 +140,13 @@
             $('#roller_load').css('opacity','1');
         },
 		data: formData,
-			success:function(data){ 
+			success:function(data){
                 console.log(data);
                 $('.ohui_container').css('opacity','1');
                 $('#roller_load').css('display','none');
-				if (data.errors) {	
+				if (data.errors) {
                         if (typeof data.messages.name != 'undefined') {
-					        html += `<li>${data.messages.name[0]}</li>`;   
+					        html += `<li>${data.messages.name[0]}</li>`;
                         }
                         if (typeof data.messages.email != 'undefined') {
                             html += `<li>${data.messages.email[0]}</li>`;
@@ -130,29 +157,29 @@
                         if (typeof data.messages.content != 'undefined') {
                             html += `<li>${data.messages.content[0]}</li>`;
                         }
-                        
+
                         Swal.fire({
                             icon: 'error',
                             html:
-                                `<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${html}</ul>`,      
+                                `<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${html}</ul>`,
                             focusConfirm: false,
                             confirmButtonText:
-                                ' Ok!',	
-                        })   
-                 
+                                ' Ok!',
+                        })
+
 				}else{
                     Swal.fire({
                         icon: 'success',
                         html:
-                            `<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${data.messages[0]}</ul>`,      
+                            `<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${data.messages[0]}</ul>`,
                         focusConfirm: false,
                         confirmButtonText:
-                            ' Ok!',	
-                        
+                            ' Ok!',
+
                     }).then((result) => {
                             window.location.reload();
                         })
-                    
+
 				}
 			},
 		});

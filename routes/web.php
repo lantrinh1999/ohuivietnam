@@ -81,7 +81,7 @@ Route::group(['namespace' => 'Client'], function () {
 
     // trang lien he fake
     Route::get('lien-he', 'PageController@contact')->name('contact');
-    Route::post('submitContact','PageController@submitContact')->name('submitContact');
+    Route::post('submitContact', 'PageController@submitContact')->name('submitContact');
 
 });
 
@@ -121,6 +121,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkIsAdmin'], 'namespace'
 
     Route::get('/', 'HomeController@index')->name('home');
     Route::any('getNewOrders', 'HomeController@getNewOrders')->name('getNewOrders');
+    Route::any('home', 'HomeController@home')->name('home');
     /*
      * Categories
      */

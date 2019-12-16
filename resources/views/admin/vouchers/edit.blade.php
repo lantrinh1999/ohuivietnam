@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('title')
-Mã giảm giá
+Voucher
 @endsection
 @section('action')
 Sửa
@@ -97,7 +97,7 @@ Sửa
                         <span style="color:red">{{$message}}</span>
                         @enderror
                     </div>
-                    
+
                     <div class="form-group">
                         <button class="btn-save btn btn-success">Lưu</button>
                         <button class="btn-save-and-exit btn btn-success">Lưu và thoát</button>
