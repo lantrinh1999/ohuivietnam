@@ -197,7 +197,7 @@ class ProductController extends Controller
         $product = Product::where('id', '=', $id)->with(['variants' => function ($query) {
             $query->with('value', 'attribute');
         }])->first();
-        $product->load('categories');
+        $product->load('categories', 'galleries');
         // dd($product->categories);
 
         $attributes = Attribute::all();
@@ -216,6 +216,141 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => [
+                    'required',
+                    'unique:products,name,' . $id,
+                    'max:191',
+                    'min:2',
+                ],
+                'slug' => [
+                    'required',
+                    'unique:products,slug,' . $id,
+                    'max:191',
+                    'min:2',
+                    'regex:/^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$/',
+                ],
+                'category_id' => 'required',
+                'g_regular_price' => [
+                    'numeric',
+                    'gt:0',
+                    'required',
+                ],
+                'g_sale_price' => 'nullable|numeric|gt:0|lt:g_regular_price',
+                'status' => 'required',
+                // 'data' => 'nullable',
+                'is_simple' => 'required',
+                // 'data' => 'required_unless:is_simple,-1',
+                'data.*.regular_price' => 'required|gt:0',
+                'data.*.sale_price' => 'nullable|numeric|gt:0|lt:data.*.regular_price',
+                'data.*.status' => 'required',
+                'data.*.value_id' => 'exists:attribute_value,id',
+            ],
+            [
+                // tên sản phẩm
+                'name.required' => 'Mời nhập tên sản phẩm.',
+                'name.unique' => 'Tên sản phẩm đã tồn tại.',
+                'name.max' => 'Tên sản phẩm không vượt quá 191 kí tự.',
+                'name.min' => 'Tên sản phẩm nhiều hơn 2 kí tự.',
+                // slug
+                'slug.required' => 'Mời nhập đường dẫn.',
+                'status.required' => 'Mời chọn trạng thái.',
+                'status.in' => 'Trạng thái không hợp lệ',
+                'data.*.status.required' => 'Mời chọn trạng thái.',
+                'data.*.status.in' => 'Trạng thái không hợp lệ',
+                'slug.unique' => 'Đường dẫn đã tồn tại.',
+                'slug.max' => 'Đường dẫn không vượt quá 191 kí tự.',
+                'slug.min' => 'Đường dẫn phải nhiều hơn 2 kí tự.',
+                'slug.regex' => 'Không đúng định dạng đường dẫn.',
+                'category_id.required' => 'Mời chọn danh mục.',
+
+                'data.*.regular_price.required' => 'Mời nhập giá',
+                'data.*.regular_price.gt' => 'Giá phải lớn hơn 0',
+                'data.*.regular_price.numeric' => 'Giá phải là số',
+
+                'data.*.sale_price.required' => 'Mời nhập giá',
+                'data.*.sale_price.gt' => 'Giá phải lớn hơn 0',
+                'data.*.sale_price.numeric' => 'Giá phải là số',
+                'data.*.sale_price.lt' => 'Giá khuyến mãi phải nhỏ hơn giá bán',
+
+                'g_sale_price.required' => 'Mời nhập giá',
+                'g_sale_price.required' => 'Mời nhập giá',
+                'g_sale_price.gt' => 'Giá phải lớn hơn 0',
+                'g_sale_price.lt' => 'Giá khuyến mãi phải nhỏ hơn giá bán',
+
+                'g_regular_price.required' => 'Mời nhập giá',
+                'g_regular_price.required' => 'Mời nhập giá',
+                'g_regular_price.required_if' => 'Mời nhập giá',
+                'g_regular_price.gt' => 'Giá phải lớn hơn 0',
+                'g_regular_price.numeric' => 'Giá phải là số',
+                'g_sale_prices.numeric' => 'Giá phải là số',
+                'data.*.value_id.required' => 'Mời chọn giá trị',
+                'data.*.status.required' => 'Mời chọn trạng thái',
+
+            ],
+        );
+
+        if ($validator->fails()) {
+            $errors = [
+                'errors' => true,
+                'messages' => $validator->errors(),
+            ];
+            return response($errors);
+        }
+
+        // for ($i=1; $i < 10; $i++) {
+        // product data
+        $product = Product::find($id);
+        $product->name = $request->name;
+        $product->name = $request->name;
+        $product->slug = $request->slug;
+        $product->image = $request->image;
+        $product->is_simple = $request->is_simple;
+        $product->description = $request->description;
+        $product->content = $request->content;
+        $product->regular_price = $request->g_regular_price;
+        $product->sale_price = $request->g_sale_price;
+        $product->status = $request->status;
+        $product->save();
+
+        // product_id
+        $product_id = $product->id;
+
+        // product_category
+        $product->categories()->sync(explode(',', $request->category_id));
+
+        // thư viện ảnh
+
+        if (!empty($request->gallery)) {
+            Gallery::where('product_id', $product_id)->delete();
+            $galleries = [];
+            foreach ($request->gallery as $value) {
+                $galleries[] = [
+                    'product_id' => $product_id,
+                    'url' => $value,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ];
+            }
+            Gallery::insert($galleries);
+        }
+
+        // biến thể
+        if (!empty($request->data)) {
+            Product_attribute::where('product_id', $product_id)->delete();
+            foreach ($request->data as $key => $variant) {
+                $variant['product_id'] = $product_id;
+                $variant['product_id'] = $product_id;
+                $variant['attribute_id'] = Attribute_value::getAttributeID($variant['value_id']);
+                $variant['created_at'] = date('Y-m-d H:i:s');
+                Product_attribute::insert($variant);
+            }
+            return response()->json([
+                'errors' => false,
+                'data' => $request->all(),
+            ]);
+        }
     }
 
     /**

@@ -183,12 +183,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkIsAdmin'], 'namespace'
         Route::any('getData', 'ContactController@getData')->name('data');
 
         Route::get('/', 'ContactController@index')->name('index');
-        Route::post('saveEdit','ContactController@saveEdit')->name('saveEdit');
+        Route::post('saveEdit', 'ContactController@saveEdit')->name('saveEdit');
         Route::post('delete', 'ContactController@delete')->name('delete');
         Route::post('deleteMulti', 'ContactController@deleteMulti')->name('deleteMulti');
 
     });
-
 
     /*
      * page
@@ -256,6 +255,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkIsAdmin'], 'namespace'
         Route::get('/', 'ProductController@index')->name('index');
         Route::get('add', 'ProductController@create')->name('add');
         Route::post('saveAdd', 'ProductController@store')->name('saveAdd');
+        Route::post('saveEdit/{id}', 'ProductController@update')->name('saveEdit');
         Route::any('getData', 'ProductController@getData')->name('getData');
         Route::any('remove', 'ProductController@destroy')->name('remove');
         Route::any('multiDel', 'ProductController@multiDel')->name('multiDel');
@@ -312,9 +312,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['checkIsAdmin'], 'namespace'
         Route::post('savePoint', 'OptionController@savePoint')->name('savePoint');
         Route::post('saveMenu', 'OptionController@saveMenu')->name('saveMenu');
         Route::post('saveService', 'OptionController@saveService')->name('saveService');
-        Route::post('saveEmailAdmin','OptionController@saveEmailAdmin')->name('saveEmailAdmin');
+        Route::post('saveEmailAdmin', 'OptionController@saveEmailAdmin')->name('saveEmailAdmin');
 
-        Route::any('setting_footer','OptionController@setting_footer')->name('setting_footer');
+        Route::any('setting_footer', 'OptionController@setting_footer')->name('setting_footer');
     });
 
 });

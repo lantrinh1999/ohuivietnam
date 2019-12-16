@@ -248,8 +248,8 @@ Thêm mới
                             <h4 class="pull-left">Dữ liệu sản phẩm —</h4>
                             <div style="margin: 8px 0px;margin-left:5px" class="mr-2 pull-left">
                                 <select class="is_simple form-control" name="is_simple" id="is_simple">
-                                    <option value="1">Sản phẩm đơn giản</option>
-                                    <option value="-1">Sản phẩm có biến thể</option>
+                                    <option {{ $product->is_simple == 1 ? 'selected' : '' }} value="1">Sản phẩm đơn giản</option>
+                                    <option {{ $product->is_simple == -1 ? 'selected' : '' }} value="-1">Sản phẩm có biến thể</option>
                                 </select>
                             </div>
                         </div>
@@ -271,12 +271,12 @@ Thêm mới
 
                         <div class="form-group">
                             <label for="">Giá</label>
-                            <input type="number" class="form-control price" id="g_regular_price" name="g_regular_price">
+                            <input value="{{  $product->regular_price }}" type="number" class="form-control price" id="g_regular_price" name="g_regular_price">
                             <span class="errors text-danger text-bold error_g_regular_price"></span>
                         </div>
                         <div class="form-group">
                             <label for="">Giá khuyến mãi</label>
-                            <input type="number" class="form-control price" id="g_sale_price" name="g_sale_price">
+                            <input  value="{{ number_format($product->sale_price, 0, ',', ' ')  }}" type="number" class="form-control price" id="g_sale_price" name="g_sale_price">
                             <span class="errors text-danger text-bold error_g_sale_price"></span>
                         </div>
                         <div class="form-group">
@@ -339,16 +339,33 @@ Thêm mới
                 <div class="form-group">
                     <label for="">Ảnh đại diện</label>
                     <div id="box-img" class="box-img gallery2">
+                        @if (!empty($product->image))
+                            <div class="img2">
+                                    <img src="{{ $product->image }}" alt="image">
+                                    <input type="hidden" name="image" value="{{ $product->image }}">
+                                    <i class="btn-remove fa fa-times"></i>
+                                </div>
+                        @else
                         <div class="img2">
                             <i style="border:none;position: absolute;left: 40%;top: 44%;font-size: 23px;"
                                 id="choose_image_product" class="choose_image_product glyphicon glyphicon-plus"></i>
                         </div>
+                        @endif
                     </div>
                     {{-- <span id="choose_image_product" class="choose_image_product btn btn-sm btn-primary">Thêm ảnh</span> --}}
                 </div>
                 <div class="form-group">
                     <label>Thư viện ảnh</label>
                     <div class="gallery">
+                        @if (!empty($product->galleries))
+                            @foreach ($product->galleries as $ga)
+                                <div class="img">
+                                <img src="{{ $ga->url }}" alt="image">
+                                <input type="hidden" name="gallery[]" value="{{ $ga->url }}">
+                                <i class="fa fa-times btn-remove"></i>
+                            </div>
+                            @endforeach
+                        @endif
                     </div>
                     <span class="choose_gallery btn btn-sm btn-primary">Add Gallery</span>
                 </div>
@@ -666,7 +683,7 @@ Thêm mới
         allData.append('status', $('body').find('#g_status').val());
 
         $.ajax({
-            url: "{{ route('admin.products.saveAdd') }}",
+            url: "{{ route('admin.products.saveEdit', ['id' => $product->id]) }}",
             method: 'post',
             processData: false,
             contentType: false,
