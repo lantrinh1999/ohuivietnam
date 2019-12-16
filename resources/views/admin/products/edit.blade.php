@@ -220,18 +220,22 @@ Thêm mới
             <form id="infomation">
                 <div class="form-group">
                     <label for="">Tên sản phẩm</label>
-                    <input class="form-control" type="text" name="name" id="name" placeholder="Tên sản phẩm">
+                    <input value="{{ $product->name }}" class="form-control" type="text" name="name" id="name" placeholder="Tên sản phẩm">
                     <span class="errors text-danger text-bold error_name"></span>
 
                 </div>
                 <div class="form-group">
                     <label for="">Đường dẫn sản phẩm</label>
-                    <input class="form-control" type="text" name="slug" id="slug" placeholder="">
+                    <input value="{{ $product->slug }}" class="form-control" type="text" name="slug" id="slug" placeholder="">
                     <span class="errors text-danger text-bold error_slug"></span>
                 </div>
                 <div class="form-group">
-                    <label for="">Chi tiết</label>
-                    <textarea class="form-control" id="content" name="content" id="" cols="40" rows="20"></textarea>
+                    <label for="">Mô tả</label>
+                    <textarea class="form-control" id="description" name="description" id="" cols="40" rows="20">{{ $product->description }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="">Chi tiết sản phẩm</label>
+                    <textarea class="form-control" id="content" name="content" id="" cols="50" rows="30">{{ $product->content }}</textarea>
                 </div>
             </form>
             <hr>
@@ -320,7 +324,11 @@ Thêm mới
                     @forelse ($categories as $category)
                     <optgroup label="{{ $category->name }}">
                         @forelse ($category->getChild as $cate_child)
-                        <option value="{{ $cate_child->id }}">{{ $cate_child->name }}</option>
+                        @php
+
+                            $arr = array_column($product->categories->toArray(), 'id');
+                        @endphp
+                        <option {{ in_array($cate_child->id, $arr) ? 'selected' : '' }} value="{{ $cate_child->id }}">{{ $cate_child->name }}</option>
                         @empty @endforelse
                     </optgroup>
                     @empty @endforelse
@@ -392,6 +400,7 @@ Thêm mới
 </script>
 
 <script>
+    CKEDITOR.replace('description', {});
     function openCity(evt, cityName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");

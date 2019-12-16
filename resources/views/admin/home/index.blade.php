@@ -98,7 +98,7 @@ Trang quản trị
 
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">Doanh thu tháng này</h3>
+        <h3 class="box-title">Doanh thu</h3>
         <form id="date">
             <input type="hidden" id="start" name="start">
             <input type="hidden" id="end" name="end">

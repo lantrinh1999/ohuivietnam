@@ -197,8 +197,8 @@ class ProductController extends Controller
         $product = Product::where('id', '=', $id)->with(['variants' => function ($query) {
             $query->with('value', 'attribute');
         }])->first();
-
-        dd($product);
+        $product->load('categories');
+        // dd($product->categories);
 
         $attributes = Attribute::all();
         $categories = Category::getAll()->with('getChild')->get();
